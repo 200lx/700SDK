@@ -1,0 +1,62 @@
+; SCCS info:   Module menu.mac  Version 1.1  Date 11/09/93  Time 16:11:44
+
+; $Header:   T:/HH/INCLUDE/VCS/MENU.MAV   1.1   15 Oct 1992 10:53:22   KIM  $
+;------------------------------------------------------------------------------
+;
+;  Jaguar Appointment Book
+;
+;  Copyright(c) 1990
+;  Lotus Development Corporation
+;  All Rights Reserved
+;
+;
+;
+;  menu.mac - This file contains all the menu definitions.
+;
+;
+;
+;
+;   Date    Who  Description
+; --------  ---  --------------------------------------------------------
+; 06/11/90  rcc  Initial version
+;
+;
+;------------------------------------------------------------------------------
+;
+; $Log:   T:/HH/INCLUDE/VCS/MENU.MAV  $
+;  
+;     Rev 1.1   15 Oct 1992 10:53:22   KIM
+;  * * * SERVER DISK CRASH RECOVERY * * *
+;   1) The VCS directory was restored with Build 18 backup tape.
+;   2) This revision is to update files to Build 19.
+;   3) HELP.H has post-Build 19 changes.
+;  
+;     Rev 1.0   03 Dec 1991 20:14:46   DAVID
+;  Initial revision.
+;
+;------------------------------------------------------------------------------
+
+
+MAX_KEYW	equ	20
+
+;
+;  System Manager MENUDATA structure
+;
+;
+
+MENUDATA    struc
+
+menu_text         db 240 dup (0) ; menu text
+menu_count        dw ?           ; item count
+menu_highl        dw ?           ; highlight
+menu_tprompt      dw ?           ; tptompt
+menu_line         db MAX_KEYW dup (0)  ; menu line
+menu_offset       db MAX_KEYW dup (0)  ; menu offset
+menu_length       db MAX_KEYW dup (0)  ; menu length
+menu_letter       db MAX_KEYW dup (0)  ; menu letter
+menu_prompt       dw MAX_KEYW dup (0)  ; prompt offsets
+
+MENUDATA    ends
+
+
+

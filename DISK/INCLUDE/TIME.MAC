@@ -1,0 +1,154 @@
+; SCCS info:   Module time.mac  Version 1.1  Date 11/09/93  Time 16:13:45
+
+;----------------------------------------------------------------------------
+; $Header:   T:/HH/INCLUDE/VCS/TIME.MAV   1.2   15 Oct 1992 10:54:00   KIM  $
+;
+; $Log:   T:/HH/INCLUDE/VCS/TIME.MAV  $
+;  
+;     Rev 1.2   15 Oct 1992 10:54:00   KIM
+;  * * * SERVER DISK CRASH RECOVERY * * *
+;   1) The VCS directory was restored with Build 18 backup tape.
+;   2) This revision is to update files to Build 19.
+;   3) HELP.H has post-Build 19 changes.
+;  
+;     Rev 1.1   30 Jun 1992 12:36:06   PETERR
+;  Added new NEWALARM entry
+;  
+;     Rev 1.1   22 Jun 1992 12:29:10   PETERR
+;  Added NEWALARM module
+;  
+;     Rev 1.0   03 Dec 1991 16:21:24   DAVID
+;  Initial revision.
+;  
+; Time.mac -- Sysmgr version
+;----------------------------------------------------------------------------
+
+
+
+DTINFO STRUC
+	dti_order	db	?
+	dti_dsep	db	?
+	dti_tsep	db	?
+	dti_24hr	db	?
+DTINFO ends	
+
+DATE_MDY	equ	0
+DATE_DMY	equ	1
+DATE_YMD	equ	2
+
+
+DTM struc
+	dt_year		dw 1 dup (?)
+	dt_month	db 1 dup (?)
+	dt_date		db 1 dup (?)
+	dt_day		db 1 dup (?)
+	dt_hour		db 1 dup (?)
+	dt_minute	db 1 dup (?)
+	dt_second	db 1 dup (?)
+	dt_hundreth	db 1 dup (?)
+DTM ends
+
+
+TIME struc
+t_hundreth	db 1 dup (?)		;0 - 99
+t_second	db 1 dup (?)		;0 - 59
+t_minute	db 1 dup (?)		;0 - 59
+t_hour		db 1 dup (?)		;0 - 23
+TIME ends
+
+
+ALARM_MSG_LEN	equ	40
+ALARM_EXTRA_LEN	equ	4
+
+ALARM struc
+a_hour		db 1 dup (?)		;time of alarm
+a_minute	db 1 dup (?)		;
+a_second	db 1 dup (?)
+a_pad		db 1 dup (?)		;word padding.
+a_interval	dw 1 dup (?)		;reschedule interval (seconds)
+a_use_seconds	db 1 dup (?)		;are seconds significant
+a_sound		db 1 dup (?)		;alarm sound
+a_message	db ALARM_MSG_LEN dup (?);message displayed when alarm goes off
+a_owner		db 1 dup (?)		;
+a_special	db 1 dup (?)		;app's own use for sub-class
+a_extra		db ALARM_EXTRA_LEN dup (?);app's own user for specific data
+ALARM ends
+
+
+ALARM_FORCE	equ	1
+ALARM_IF_EARLY	equ	2
+ALARM_IF_CLEAR	equ	4
+ALARM_NOIGN_SECONDS equ	80h
+
+ALARM_SYSMGR_SIG equ	'm'		; goes in special field of midnight
+					; alarms				
+
+
+
+WAKEUP_ON_KEY	equ	1
+WAKEUP_UART	equ	2
+WAKEUP_RTC	equ	4
+WAKEUP_XINT	equ	8
+
+
+
+COMMENT @
+/* -------------------------------------------------------------------
+ *
+ * NEWALARM - Replaces obsolete ALARM structure
+ *
+ *
+ */
+ @
+
+
+NALARM_MSG_LEN		=  36
+NALARM_EXTRA_LEN	=  4
+
+NEWALARM  struc
+na_year    dw	?;	Year	(as returned by DOS)
+na_month   db	?;	Month (as returned by DOS)
+na_date    db	?;	Day of month (as returned by DOS)
+na_hour    db	?;	Time of alarm, hours
+na_minute  db	?;	Time of alarm, minutes
+na_second  db	?;	Time of alarm, seconds
+na_pad	   db	?;	  (place holder for pack)
+na_sound   db	?;	Alarm sound
+na_message db	NALARM_MSG_LEN dup(?);Message displayed when alarm goes off
+na_special db	?      ;App's own use for sub-class. Passed back to app
+		       ;through event notification
+na_extra   db  NALARM_EXTRA_LEN dup(?);
+;App's own use for specific data.Passed back to app through event
+;notification
+na_old	    db	?	;Old style alarm indicator
+na_tot_secs dd	 ?;	  Total secs since 1-1-80 @12:00am
+na_owner   db	 ?;	  Task id of the owner
+NEWALARM	ENDS
+
+
+
+
+
+
+
+TIMECHANGE STRUC
+	otc_year	dw	1 dup (?)
+	otc_month	db	1 dup (?)
+	otc_date	db	1 dup (?)
+	otc_day		db	1 dup (?)
+	otc_hour	db	1 dup (?)
+	otc_minute	db	1 dup (?)
+	otc_second	db	1 dup (?)
+	otc_hundreth	db	1 dup (?)
+	ntc_year	dw	1 dup (?)
+	ntc_month	db	1 dup (?)
+	ntc_date	db	1 dup (?)
+	ntc_day		db	1 dup (?)
+	ntc_hour	db	1 dup (?)
+	ntc_minute	db	1 dup (?)
+	ntc_second	db	1 dup (?)
+	ntc_hundreth	db	1 dup (?)
+TIMECHANGE ends
+
+
+

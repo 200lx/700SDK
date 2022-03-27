@@ -1,0 +1,182 @@
+; SCCS info:   Module private.mac  Version 1.1  Date 11/09/93  Time 16:12:09
+
+; $Header:   T:/HH/INCLUDE/VCS/PRIVATE.MAV   1.2   25 Mar 1993 05:41:14   KIM  $
+;**************************************************************************
+;
+; Name:       PRIVATE.MAC
+; Date:       01/24/93
+; Abstract:   System Manager: Non-public functions defined here.
+;                             Public functions defined in INTERFAC.MAC 
+;
+; NOTE: This file may be used in conjunction with INTERFAC.MAC.  This file
+;       compliments INTERFAC.MAC by defining functions that are not public.
+;       
+;       If used with INTERFAC.MAC, please define INTERFAC_H so it will
+;       have duplicate definition of control variables.
+;
+; -------------------------------------------------------------------------
+;                  Copyright (c) 1992 Lotus Development Corp.
+;                          All rights reserved.
+;**************************************************************************
+;
+; $Log:   T:/HH/INCLUDE/VCS/PRIVATE.MAV  $
+;  
+;     Rev 1.2   25 Mar 1993 05:41:14   KIM
+;  Moved entry for ComAutoSet to private.h/mac. Non-public routine.
+;  
+;     Rev 1.1   05 Feb 1993 16:51:46   KIM
+;  Added Ovl_m_errmsg.
+;  
+;     Rev 1.0   25 Jan 1993 23:31:52   KIM
+;  Initial revision.
+;
+;**************************************************************************
+
+IFE     INTERFAC_MAC
+  IFDEF API2
+        CLASS_BASE              EQU     40h
+        FNCT_BASE               EQU     01h
+        SERVICESVECTOR          equ     7Eh                     ; homi
+        FIRST_ARG_LEN           equ     12 + 6 + 2              ; homi
+        DUMMY_ARG_SIZE          equ     6
+
+        SERVICES macro serclass,subfunc                 ; homi        
+                IF ((SC_&serclass GE 50h) AND (SC_&serclass LE 53h)) OR (SC_&serclass EQ 56h)         
+                        mov  di,(SC_&serclass SHL 8) OR Fun&serclass&subfunc
+                        xchg ax, di
+                ELSE
+                        mov  ax,(SC_&serclass SHL 8) OR Fun&serclass&subfunc
+                ENDIF
+                System_Service_Call
+        endm
+
+        SVCALL  macro serclass_subfunc                  ; homi
+                IF ((serclass_subfunc GE 5000h) AND (serclass_subfunc LE 53FFh))  \
+                OR ((serclass_subfunc GE 5600h) AND (serclass_subfunc LE 56FFh))        
+	                mov     di,serclass_subfunc
+                        xchg    ax, di
+                ELSE
+	                mov     ax,serclass_subfunc
+                ENDIF
+                System_Service_Call
+	endm
+
+        SMCALL  macro serclass_subfunc                  ; homi        
+                IF ((serclass_subfunc GE 5000h) AND (serclass_subfunc LE 53FFh))  \
+                OR ((serclass_subfunc GE 5600h) AND (serclass_subfunc LE 56FFh))        
+	                mov     di,serclass_subfunc
+                        xchg    ax, di
+                ELSE
+	                mov     ax,serclass_subfunc
+                ENDIF
+	        sub     sp,DUMMY_ARG_SIZE
+                System_Service_Call
+	        add     sp,DUMMY_ARG_SIZE
+	endm
+
+        ; Extended SM CALL 
+        SMCALLX macro serclass_subfunc, BytesPushed
+                IF ((serclass_subfunc GE 5000h) AND (serclass_subfunc LE 53FFh))  \
+                OR ((serclass_subfunc GE 5600h) AND (serclass_subfunc LE 56FFh))        
+	                mov     di,serclass_subfunc
+                        xchg    ax, di
+                ELSE
+	                mov     ax,serclass_subfunc
+                ENDIF
+	        sub     sp,DUMMY_ARG_SIZE
+                System_Service_Call
+	        add     sp,DUMMY_ARG_SIZE + BytesPushed
+	endm
+
+
+        IntSvcCall      MACRO
+                xchg    ax, di
+                System_Service_Call
+        ENDM
+
+        SC_APIMGT      EQU      (CLASS_BASE + 0)
+  ELSE
+        CLASS_BASE              EQU     0h
+        FNCT_BASE               EQU     0h
+        SERVICESVECTOR          equ     60h
+        FIRST_ARG_LEN           equ     12
+        DUMMY_ARG_SIZE          equ     4
+
+        SERVICES macro serclass,subfunc
+        	mov di,(SC_&serclass SHL 8) OR Fun&serclass&subfunc
+                System_Service_Call
+	endm
+
+        SVCALL  macro serclass_subfunc
+	        mov     di,serclass_subfunc
+                System_Service_Call
+	endm
+
+        SMCALL  macro serclass_subfunc
+	        mov     di,serclass_subfunc
+	        sub     sp,DUMMY_ARG_SIZE
+                System_Service_Call
+	        add     sp,DUMMY_ARG_SIZE
+	endm
+
+        SC_Fp           equ     (CLASS_BASE + 0)
+  ENDIF
+
+SC_EVENT        equ     (CLASS_BASE + 1)
+SC_MENU         equ     (CLASS_BASE + 2)
+SC_SCREEN       equ     (CLASS_BASE + 3)
+SC_EDIT         equ     (CLASS_BASE + 4)
+SC_FILE         equ     (CLASS_BASE + 5)
+SC_PM           equ     (CLASS_BASE + 6)
+SC_CB           equ     (CLASS_BASE + 7)
+SC_SOUND        equ     (CLASS_BASE + 8)
+SC_MM           equ     (CLASS_BASE + 9)
+SC_BG           equ     (CLASS_BASE + 10)
+SC_DTIME        equ     (CLASS_BASE + 11)
+SC_PRINT        equ     (CLASS_BASE + 12)
+SC_CONFIG       equ     (CLASS_BASE + 13)
+SC_COMM         equ     (CLASS_BASE + 14)
+SC_MISC         equ     (CLASS_BASE + 15)
+SC_VIDVIR       equ     (CLASS_BASE + 16)
+SC_VIDPHY       equ     (CLASS_BASE + 17)
+SC_GRDISP       equ     (CLASS_BASE + 18)
+SC_KEY          equ     (CLASS_BASE + 19)
+SC_RSRC         equ     (CLASS_BASE + 20)
+SC_HELP         equ     (CLASS_BASE + 21)
+SC_COL          equ     (CLASS_BASE + 22)
+SC_RESV         equ     (CLASS_BASE + 23)       ; Resvd for ccMail use
+
+SC_RESERVED1    equ     (CLASS_BASE + 25)   ; For Sys Mgr internal use 
+
+ifdef XBS
+SC_XBS_UNIQUE	equ	(CLASS_BASE + 26)   ; Different platform
+else
+IT_IS_RESERVED	equ	(CLASS_BASE + 26)   ; Do not use
+endif
+
+SC_MAXNUM_JAG   equ     22
+SC_MAXNUM       equ     (CLASS_BASE + 22)
+
+; ---------------------------------------------------------------------------
+
+DataSegVector   equ     61h
+DataSegVector_2 equ     7Fh
+
+ENDIF ; INTERFAC_MAC
+
+F_COMM_AUTOSET               EQU (SC_COMM      * 256) + 34 + FNCT_BASE
+
+SM_OVL_MESSAGE               EQU (SC_RESERVED1 * 256) +  0 + FNCT_BASE
+SM_OVL_MESSAGE3              EQU (SC_RESERVED1 * 256) +  1 + FNCT_BASE
+SM_OVL_SHOW_SYSERR           EQU (SC_RESERVED1 * 256) +  2 + FNCT_BASE
+SM_OVL_MSG_OFF               EQU (SC_RESERVED1 * 256) +  3 + FNCT_BASE
+SM_OVL_FORCE_CLOSED_LINK     EQU (SC_RESERVED1 * 256) +  4 + FNCT_BASE
+SM_OVL_USER_CLOSES_APPS      EQU (SC_RESERVED1 * 256) +  5 + FNCT_BASE
+SM_OVL_ALARM_DISPLAY         EQU (SC_RESERVED1 * 256) +  6 + FNCT_BASE
+SM_OVL_GET_ESC_KEY           EQU (SC_RESERVED1 * 256) +  7 + FNCT_BASE
+SM_OVL_BOXMESSAGE            EQU (SC_RESERVED1 * 256) +  8 + FNCT_BASE
+SM_OVL_MEMCHECKANDPROMPT     EQU (SC_RESERVED1 * 256) +  9 + FNCT_BASE
+SM_OVL_M_NALARM              EQU (SC_RESERVED1 * 256) + 10 + FNCT_BASE
+SM_OVL_INIT_SYSMGR_RESOURCES EQU (SC_RESERVED1 * 256) + 11 + FNCT_BASE
+SM_OVL_M_ERRMSG              EQU (SC_RESERVED1 * 256) + 12 + FNCT_BASE
+

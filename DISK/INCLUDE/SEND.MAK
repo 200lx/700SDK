@@ -1,0 +1,85 @@
+# Makefile to send all source in .../cougar/include to the PC.
+
+SOURCES=_fstring.h \
+	boxchrs.h \
+	bridge.h \
+	bridge.mac \
+	brkctl.inc \
+	cbcodes.h \
+	cchandle.h \
+	ccmsgbox.h \
+	ccvrext.h \
+	char_alt.h \
+	charcode.h \
+	charscan.h \
+	cmacros.inc \
+	comerrs.h \
+	comio.h \
+	crt.h \
+	dbapi.h \
+	defs.h \
+	dsptbls.h \
+	dsptbls.mac \
+	edit.h \
+	event.h \
+	event.mac \
+	fileio.h \
+	fileio.mac \
+	fmenu.h \
+	help.h \
+	hmtop.h \
+	htop.h \
+	imagevec.h \
+	imagevec.mac \
+	ini.h \
+	interfac.h \
+	interfac.mac \
+	jmp.h \
+	kstring.h \
+	lhapi.h \
+	loadclas.h \
+	m_calls.h \
+	m_defs.h \
+	m_error.h \
+	m_locks.h \
+	m_time.h \
+	mcap.h \
+	mdit.h \
+	menu.h \
+	menu.mac \
+	mikestd.mac \
+	msdos.inc \
+	mystr.h \
+	parsekey.h \
+	pbclipbd.h \
+	printer.h \
+	private.h \
+	private.mac \
+	resbuild.h \
+	rpc.h \
+	rpcdrv.h \
+	rsdefs.mac \
+	services.mac \
+	settings.h \
+	settings.mac \
+	showhour.h \
+	smedit.mac \
+	smfp.mac \
+	spectsr.mac \
+	sysdefs.h \
+	syshelp.h \
+	syshelp.mac \
+	time.mac \
+	version.inc \
+	video.h \
+	vim.h \
+	vimext.h \
+	vimlcl.h \
+	xbs.mac \
+	xbs_inte.h \
+	xbs_inte.mac \
+	xbshdr.h \
+	xbshdr.mac
+
+all: 	$(SOURCES)
+	sendall . $(SOURCES)

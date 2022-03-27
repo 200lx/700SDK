@@ -1,0 +1,21 @@
+Microsoft (R) Program Maintenance Utility   Version 1.11    
+Copyright (c) Microsoft Corp 1988-90. All rights reserved.
+	cl /c /ID:\FELIX\include /AS /W1 /Ze /Zi /Od /Gs /G1 /DPCKEYBOARD /DTKERNEL /DAPI2  fetchsms.c
+fetchsms.c
+	del main.lib
+	lib @C:\TEMP\nm007341.
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: main /NOI +sms.obj&
+Operations: +smsmain.obj&
+Operations: +sendsms.obj&
+Operations: +fetchsms.obj&
+Operations: +dlgs.obj;
+	link /CP:0xffff /NOI /NOE /SE:0x80 /ST:0x1000 /CO  @C:\TEMP\nma07341.
+
+Microsoft (R) Segmented-Executable Linker  Version 5.10    
+Copyright (C) Microsoft Corp 1984-1990.  All rights reserved.
+
+Object Modules [.OBJ]: /CP:0xffff /NOI /NOE /SE:0x80 /ST:0x1000 /CO main.lib sms.lib,sms.exe,,D:\FELIX\lib\tsr.lib D:\FELIX\lib\mlhstub.lib D:\FELIX\lib\captko.lib;

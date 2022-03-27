@@ -1,0 +1,272 @@
+; SCCS info:   Module xbs.mac  Version 1.1  Date 11/09/93  Time 16:13:56
+
+;* $Header:   T:/HH/INCLUDE/VCS/XBS.MAV   1.2   15 Oct 1992 10:54:04   KIM  $ */
+;****************************************************************
+;*
+;*      Copyright(c) 1992  Lotus Development Corporation
+;*      All Rights Reserved
+;*
+;****************************************************************
+;*
+;* $Log:   T:/HH/INCLUDE/VCS/XBS.MAV  $
+;  
+;     Rev 1.2   15 Oct 1992 10:54:04   KIM
+;  * * * SERVER DISK CRASH RECOVERY * * *
+;   1) The VCS directory was restored with Build 18 backup tape.
+;   2) This revision is to update files to Build 19.
+;   3) HELP.H has post-Build 19 changes.
+;  
+;     Rev 1.1   20 Aug 1992 16:28:06   KIM
+;  Bug fix: Header section was created using "C" format instead of Assembler.
+;  
+;     Rev 1.0   19 Aug 1992 10:39:24   HOMI
+;  Initial revision.
+;* 
+;****************************************************************
+
+; ---------------------------------------------------------------------------
+; XBS Header file
+; ---------------------------------------------------------------------------
+
+XBI             equ     7Eh             ; XBIOS interrupt
+
+; System services
+
+HAND_ERROR      equ     8000h           ;Return error condition
+HAND_INIT       equ     8001h           ;Initialise XBI TSR
+HAND_UNIN       equ     8002h           ;Uninstall XBI vector
+HAND_CPYVTAB    equ     8003h           ;Copy ROM table to RAM
+HAND_GETADDR    equ     8004h           ;Get XBI ROM table
+HAND_GETVECT    equ     8005h           ;Get XBI vector table
+HAND_SETVECT    equ     8006h           ;Set XBI vector table
+HAND_GETVER     equ     8007h           ;Get XBI version number
+HAND_OLDVECT    equ     8008h           ;Get vector to XBS service
+HAND_NEWVECT    equ     8009h           ;Set vector to XBS service
+HAND_UNUSED     equ     800Bh           ;Returns CF+AL=0ffh
+
+; Configuration services
+
+CONF_REPORT     equ     8100h           ;Report system configuration
+CONF_GETPSC     equ     8102h           ;Get PSRAM config
+CONF_SETPSC     equ     8103h           ;Set PSRAM config
+
+; CPU reset services
+
+RSET_REASON     equ     8200h           ;Get CPU reset reason
+
+; Power control services
+
+POW_GETSPD      equ     8300h           ;Get processor clock speed
+POW_SETSPD      equ     8301h           ;Set processor clock speed
+POW_DECSPD      equ     8302h           ;Decrement clock speed
+POW_INCSPD      equ     8303h           ;Increment clock speed
+POW_GETDLY      equ     8304h           ;Get power down delay
+POW_SETDLY      equ     8305h           ;Set power down delay
+POW_DECDLY      equ     8306h           ;Decrement power down delay
+POW_INCDLY      equ     8307h           ;Increment power down delay
+POW_GETEVT      equ     8308h           ;Get power down event
+POW_SETEVT      equ     8309h           ;Set power down event
+POW_RESTLPM     equ     830Ah           ;Restore low power mode
+POW_CONTROL     equ     830Bh           ;Power management
+POW_SLEEP       equ     830Ch           ;Stop processor clock
+POW_INTPCHK     equ     830Dh           ;Interrupt power check
+POW_POWDOWN     equ     830Eh           ;Initiate power down
+POW_POWCONT     equ     830Fh           ;Continue power up
+POW_GETPDS      equ     8310h           ;Get power down state
+POW_SETPDS      equ     8311h           ;Set power down state
+POW_SETLPM      equ     8312h           ;Set low power mode
+POW_GETLPM      equ     8313h           ;Get low power mode
+POW_GPUMASK     equ     8314h           ;Get power up mask
+POW_SPUMASK     equ     8315h           ;Set power up mask
+POW_PWDNHK      equ     8316h           ;Pre-power down hook
+POW_PWUPHK      equ     8317h           ;Post-power up hook
+POW_GETCPS      equ     831Ch           ;Get current power state
+POW_SETCPS      equ     831Dh           ;Set current power state
+POW_KEYPCHK     equ     831Eh           ;Keyboard power check
+
+; Timer control services
+
+TIM_GETSERV     equ     8400h           ;Get timer service routine
+TIM_SETSERV     equ     8401h           ;Set timer service routine
+TIM_USER        equ     8402h           ;Event scheduler
+TIM_EVPAUSE     equ     8403h           ;Wait for event
+TIM_PAUSE       equ     8404h           ;Pause for delay
+TIM_KBPAUSE     equ     8405h           ;Wait for delay or keypress
+TIM_KILLSERV    equ     8406h           ;Kill timer service call
+TIM_EXTSERV     equ     8407h           ;Extend timer service call
+TIM_GETPDO      equ     8408h           ;Get Timer Option
+TIM_SETPDO      equ     8409h           ;Set Timer Option
+TIM_GETBTI      equ     840Ah           ;Get batt check timer interval
+TIM_SETBTI      equ     840Bh           ;Set batt check timer interval
+
+; Memory device control services
+
+MEM_GETRES      equ     8500h           ;Get system memory resources
+MEM_GETFRABAS   equ     8501h           ;Get 64K frame base addr
+MEM_GETFRAPAG   equ     8502h           ;Get 64K page from mem dev
+MEM_SETFRAPAG   equ     8503h           ;Set 64K page from mem dev
+MEM_PRESMAP     equ     8504h           ;Preserve mapping context
+MEM_RESTMAP     equ     8505h           ;Restore mapping context
+MEM_SETFRABAS   equ     8507h           ;Set 64K frame base addr
+
+; Extended keyboard services
+
+KBD_GETKBD      equ     8600h           ;Get internal/external
+KBD_SETKBD      equ     8601h           ;Set internal/external
+KBD_GETPHY      equ     8602h           ;Get physical keyboard type
+KBD_SETPHY      equ     8603h           ;Set physical keyboard type
+KBD_REVECTOR    equ     8606h           ;Use internal keyboard routines
+KBD_DEVECTOR    equ     8607h           ;Restore external routines
+
+; Video services
+
+VID_GETINV      equ     8906h           ;Get inverse video
+VID_SETINV      equ     8907h           ;Set inverse video
+VID_FLIP        equ     8908h           ;Flip inverse video setting
+VID_CPYCHBLK    equ     8909h           ;Copy 128 char block to RAM
+VID_GETCHSET    equ     890Ah           ;Get character set
+VID_SETCHSET    equ     890Bh           ;Set character set
+VID_CPYCHSET    equ     890Ch           ;Copy char set to RAM
+VID_MODCHAR     equ     890Dh           ;Modify char in RAM
+VID_LOADUCS     equ     890Eh           ;Load user char set
+VID_UNLDUCS     equ     890Fh           ;Unload user char set
+VID_VALCP       equ     8910h           ;Validate code page number
+VID_SETDCS      equ     8911h           ;Set default char set
+
+; PCMCIA CCM services
+
+CCM_RESET       equ     8A00h           ;Reset CCM system
+CCM_GETFRAME    equ     8A01h           ;Return page frame info
+CCM_PHYSTAT     equ     8A02h           ;Get physical slot status
+CCM_PCMSTAT     equ     8A03h           ;Get PCMCIA slot status
+CCM_POWAPP      equ     8A04h           ;Apply power to slot
+CCM_POWOFF      equ     8A05h           ;Remove power from slot
+CCM_DISABLE     equ     8A06h           ;Disable CCM slot
+CCM_ENABLE      equ     8A07h           ;Enable CCM slot
+CCM_GETPAGE     equ     8A08h           ;Get current page
+CCM_SETPAGE     equ     8A09h           ;Set current page
+CCM_INSERT      equ     8A0Ah           ;Card insert routine
+CCM_REMOVE      equ     8A0Bh           ;Card remove routine
+CCM_GETCPB      equ     8A0Ch           ;Get address of CPB
+CCM_SETCPB      equ     8A0Dh           ;Set address of CPB
+CCM_CONFIG      equ     8A0Eh           ;Configure CPB
+CCM_GETCIS      equ     8A10h           ;Get CIS from slot
+CCM_SETCIS      equ     8A11h           ;Set CIS onto slot
+CCM_DECODE      equ     8A12h           ;Decode CIS Tuples
+CCM_GETPART     equ     8A14h           ;Get partition mapping
+CCM_UPDPART     equ     8A15h           ;Update partition mapping
+CCM_GETOPT      equ     8A16h           ;Get CCM options
+CCM_SETOPT      equ     8A17h           ;Set CCM options
+CCM_READ        equ     8A18h           ;Read memory block
+CCM_WRITE       equ     8A19h           ;Write memory block
+CCM_VERIFY      equ     8A1Ah           ;Verify memory block
+CCM_FORMAT      equ     8A1Bh           ;Format memory block
+CCM_GETPARM     equ     8A1Ch           ;Get format parameters
+CCM_SETBDS      equ     8A1Dh           ;Set up BDS for drive
+CCM_GETSIZE     equ     8A1Eh           ;Get size of CCM
+CCM_FMATCCM     equ     8A1Fh           ;Format CCM to size
+CCM_GETVECT     equ     8A20h           ;Get CCM entry point
+CCM_SETVECT     equ     8A21h           ;Set CCM entry point
+CCM_GETDMAP     equ     8A22h           ;Get drive mapping
+CCM_CHANGE      equ     8A23h           ;Set slot change
+CCM_POWREM      equ     8A24h           ;Remove power from CCM
+CCM_GETINFO     equ     8A26h           ;Get CCM information
+CCM_NOTIFY      equ     8A27h           ;CCM hooks
+
+; TPA RAMDisk services
+
+RAM_INIT        equ     8B00h           ;Initialise TPA RAM disk
+RAM_GETBASE     equ     8B01h           ;Get disk base and size
+RAM_FORMAT      equ     8B03h           ;Format internal disk
+
+; Tone generation services
+
+TON_INIT        equ     8C00h           ;Initialise sound
+TON_GETSTA      equ     8C02h           ;Get enable/disable tones
+TON_SETSTA      equ     8C03h           ;Set enable/disable tones
+TON_CLICK       equ     8C04h           ;Generate click
+TON_BEEP        equ     8C05h           ;Generate beep
+TON_TONE        equ     8C06h           ;Generate tone
+TON_ALARM       equ     8C07h           ;Generate alarm
+TON_NOTE        equ     8C08h           ;Generate note
+
+; Peripheral services
+
+PER_GETIO       equ     8E02h           ;Get peripheral IO data
+PER_SETIO       equ     8E03h           ;Set peripheral IO data
+PER_REPLAY      equ     8E04h           ;Replay I/O data
+PER_GETCOM      equ     8E06h           ;Set COM port type
+PER_SETCOM      equ     8E07h           ;Set COM port type
+PER_GETPAR      equ     8E08h           ;Set LPT port type
+PER_SETPAR      equ     8E09h           ;Set LPT port type
+
+; National support services
+
+NAT_GETLAN      equ     8F00h           ;Get language
+NAT_SETLAN      equ     8F01h           ;Set language
+
+; Password services
+
+PAS_GETPWD      equ     9100h           ;Get password
+PAS_SETPWD      equ     9101h           ;Set password
+PAS_CHECK       equ     9102h           ;Validate password
+PAS_GETSTA      equ     9104h           ;Get password enable state
+PAS_SETSTA      equ     9105h           ;Set password enable state
+
+; User Interface sevices
+
+USE_GETLANGTAB  equ     9200h           ;Get address of lang table
+USE_SETLANGTAB  equ     9201h           ;Set address of lang table
+USE_ASSIGN      equ     9202h           ;Assign text ident
+USE_RETURN      equ     9203h           ;Return text message
+USE_GETLINE     equ     9204h           ;Get line routine
+USE_OPENBOX     equ     9205h           ;Open box routine
+USE_CLOSBOX     equ     9206h           ;Close box routine
+USE_GETWAIT     equ     9207h           ;Get display duration
+USE_SETWAIT     equ     9208h           ;Set display duration
+USE_DISPBOX     equ     9209h           ;Display box routine
+USE_POSTIT      equ     920Ah           ;Post message
+USE_DISPALL     equ     920Bh           ;Display all
+USE_POPLAST     equ     920Ch           ;Pop display last
+USE_POPFIRST    equ     920Dh           ;Pop display first
+USE_GETNUM      equ     920Eh           ;Get message count
+USE_CLEAR       equ     920Fh           ;Clear post box
+
+; Battery control services
+
+BAT_GETBATCTL   equ     9300h           ;Get battery control
+BAT_SETBATCTL   equ     9301h           ;Set battery control
+BAT_GETBATSTA   equ     9302h           ;Get battery status
+
+; Memory control services
+
+MEM_DEFPCCMAP   equ     9408h           ;Get default PCC mapping state
+MEM_CURPCCMAP   equ     9409h           ;Get current PCC mapping state
+MEM_INITPCC     equ     940Ah           ;Initialise PCC hardware
+MEM_GETPCCPGE   equ     940Bh           ;Get PCC page mapping
+MEM_SETPCCPGE   equ     940Ch           ;Set PCC page mapping
+
+; SRAM Control services
+
+SRM_GETWRAP     equ     9701h           ;Get SRAM wrapping state
+SRM_SETWRAP     equ     9702h           ;Set SRAM wrapping state
+SRM_ENAB        equ     9703h           ;Enable secure SRAM
+SRM_DISA        equ     9704h           ;Disable secure SRAM
+
+; Miscellaneous services
+
+MSC_STATUS      equ     9801h           ;Update status display
+MSC_REBOOT      equ     9802h           ;Reboot machine
+MSC_BOOTLED     equ     9805h           ;LED status on boot
+
+; PC/CHIP services
+
+PCC_GETUART     equ     9A00h           ;Get UART destination
+PCC_SETUART     equ     9A01h           ;Set UART destination
+
+; ---------------------------------------------------------------------------
+; XBS event equates used by JagKey.asm 
+; ---------------------------------------------------------------------------
+
+XBS_EVENT_TYPE  equ     0001h   ; bit 0 keypress/bit 1 serial/bit 2 parellel
+XBS_EVENT_TEST  equ     0001h   

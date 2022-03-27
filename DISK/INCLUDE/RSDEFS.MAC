@@ -1,0 +1,157 @@
+; SCCS info:   Module rsdefs.mac  Version 1.1  Date 11/09/93  Time 16:12:23
+
+; $Header:   T:/HH/INCLUDE/VCS/RSDEFS.MAV   1.1   15 Oct 1992 10:53:30   KIM  $
+
+;; ****************************************************************
+;; *
+;; *	Copyright(c) 1990  Lotus Development Corporation
+;; *	All Rights Reserved
+;; *
+;; ****************************************************************/
+
+;----------------------------------------------------------------------------
+;
+; MACROS to automatically generate tables of resource pointers.
+;
+;
+; The table build macros create new resource handles which are indexes into
+; the resource table.  The new handle names are obtained by concatentating
+; the old handle name onto "x".  Once initialized, the old handles must not
+; be used, only the new handles (the indexes into the table).  The table is
+; automatically initialized at startup with the old handles.  This value gets
+; overwritten with the actual far address of the string and the new handle is
+; assigned the index into the table.
+;
+; Note, the size of each entry is defined as RS_TABLE_ENTRY_SIZE.  You should
+; use this value multiplied by the table index to access the pointers.  Do
+; NOT assume that the size of a table entry is 4.  This will be necessary if
+; applications need to reinitialize the string pointers if the language is
+; changed (the resource handle will need to be kept in the table).
+;
+;
+; Example of usage with file SAMPLE:
+;
+;	Create a .ASM file, SAMPLE.ASM, for data and initialization.
+;
+;	>
+;	>	include RSDEFS.MAC	;include this file for resource macro
+;	>				; definitions
+;	>
+;	>	ifndef RSDEFS
+;	>	
+;	>	include	SAMPLE.EQU	;include file generated from resource
+;	>				; editor
+;	>	include INTERFAC.MAC	;include the system manager services
+;	>
+;	>	endif
+;	>
+;	>
+;	>	ifndef RSDEFS
+;	>
+;	>	.model	SMALL
+;	>
+;	>	.data
+;	>
+;	>	endif
+;	>
+;	>	rs_start_table sample_rs_table
+;	>		rs_entry sample_menu_handle	;handles from the
+;	>		rs_entry sample_error_handle	; SAMPLE.EQU file
+;	>		rs_entry sample_prompt1_handle	;
+;	>		rs_entry sample_prompt4_handle	;
+;	>	rs_end_table RS_SAMPLE_TABLE_SIZE
+;	>
+;	>
+;	>	ifndef RSDEFS
+;	>
+;	>	.code
+;	>
+;	>
+;	>	init_sample_rs_strings	PROC	NEAR
+;	>
+;	>		rs_init_table	sample_rs_table,RS_SAMPLE_TABLE_SIZE
+;	>		ret
+;	>
+;	>	init_sample_rs_strings	ENDP
+;	>
+;	>	endif
+;	>
+;	>	end
+;
+;
+;	Create a .MAC file, SAMPLE.MAC, to access the redefined handles.
+;
+;	>	RSDEFS	equ	1	;Define the required constant.
+;	>	include SAMPLE.ASM	;Include the .ASM file.
+;	>
+;	>	;That's all there is to this file, just the above 2 lines.
+;
+;		
+;
+;----------------------------------------------------------------------------
+; $Log:   T:/HH/INCLUDE/VCS/RSDEFS.MAV  $
+;  
+;     Rev 1.1   15 Oct 1992 10:53:30   KIM
+;  * * * SERVER DISK CRASH RECOVERY * * *
+;   1) The VCS directory was restored with Build 18 backup tape.
+;   2) This revision is to update files to Build 19.
+;   3) HELP.H has post-Build 19 changes.
+;  
+;     Rev 1.0   03 Dec 1991 20:14:26   DAVID
+;  Initial revision.
+;
+;----------------------------------------------------------------------------
+
+
+RS_TABLE_ENTRY_SIZE	equ	4
+
+
+rs_start_table	MACRO	table_name
+	&table_name	equ	this word
+	xbuild_index	=	0
+	ENDM
+
+
+rs_reassign	MACRO new_name,new_value
+	&new_name	equ	&new_value
+	ENDM
+
+
+rs_entry	MACRO	rs_handle
+	ifndef	RSDEFS
+		dd	&rs_handle
+	endif
+	rs_reassign	x&rs_handle,%xbuild_index
+	xbuild_index	=	xbuild_index + 1
+	ENDM
+
+
+rs_end_table	MACRO	max_name
+	rs_reassign	&max_name,%xbuild_index
+	ENDM
+
+
+rs_init_table	MACRO	table_name,max_name
+
+	push	ax			;save registers
+	push	cx			;
+	push	si			;
+
+	mov	cx,&max_name		;get the number of entries in table
+	mov	si,offset &table_name	;get pointer to table
+@@:
+	mov	ax,[si]			;get the resource handle
+	push	ax			;pass it on the stack
+	SMCALL	F_GET_RESOURCE_PTR	;dx:ax gets far pointer to string
+	add	sp,2			;remove arguments from the stack
+	mov	[si],ax			;store the pointer in the table
+	mov	[si+2],dx		;
+	add	si,RS_TABLE_ENTRY_SIZE	;point to next table entry
+	loop	@b			;go do next entry
+
+	pop	si			;
+	pop	cx			;
+	pop	ax			;restore registers
+
+	ENDM
+

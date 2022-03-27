@@ -1,0 +1,150 @@
+; SCCS info:   Module imagevec.mac  Version 1.1  Date 11/09/93  Time 16:11:16
+
+; $Header:   T:/HH/INCLUDE/VCS/IMAGEVEC.MAV   1.1   15 Oct 1992 10:53:14   KIM  $
+;*********************************************************************
+;
+; IMAGEVEC.MAC
+;
+; Copyright(c) 1990-1992
+; Lotus Development Corporation
+; All Rights Reserved
+;
+; Image vector table structure created by RIB, used by System Manager
+; and its representation in RAM
+;
+;*********************************************************************
+;
+; $Log:   T:/HH/INCLUDE/VCS/IMAGEVEC.MAV  $
+;  
+;     Rev 1.1   15 Oct 1992 10:53:14   KIM
+;  * * * SERVER DISK CRASH RECOVERY * * *
+;   1) The VCS directory was restored with Build 18 backup tape.
+;   2) This revision is to update files to Build 19.
+;   3) HELP.H has post-Build 19 changes.
+;  
+;     Rev 1.0   17 Apr 1992 21:09:14   KIM
+;  Initial revision.
+;  
+;     Rev 1.1   11 Dec 1991 11:14:56   ROGER
+;  Increased teh MAX_RIV_PATH from 30 to 80 for MOTOWN.
+;  
+;     Rev 1.0   03 Dec 1991 16:20:50   DAVID
+;  Initial revision.
+;  
+
+
+; IMAGEVEC is the structure which is stored in the ROM 
+; It must be permanently mapped into system address space?
+
+
+IV_TYPE_NONE    equ	00h
+IV_TYPE_CODE	equ	01h
+IV_TYPE_DATA    equ	02h
+IV_TYPE_RAM     equ     10h
+IV_TYPE_RSRC    equ	20h
+IV_TYPE_123     equ	40h
+IV_TYPE_SYSMGR  equ	80h
+
+
+;
+;ROM IMAGE_VECTOR
+; Structure of the image vector record.
+;
+IMAGEVEC	STRUC
+	IV_Type		   db 0	        ;Image vector type. See IV_TYPE_?
+	IV_DataCmp	   db 0	        ;0: data seg not compressed; else 1
+	IV_RS_StartCode	   dd 0	        ;ROM space code start location
+	IV_RS_SizeCode	   dw 0	        ;ROM space code image size (para)
+	IV_RS_StartData	   dd 0	        ;ROM space data start location
+	IV_RS_SizeData	   dw 0	        ;ROM space data image size (para)
+	IV_RS_SizeDataCmp  dw 0	        ;ROM space data image cmp size (para)
+	IV_RS_StartFixUp   dd 0	        ;ROM space fixup table location
+	IV_NumFixUps	   dw 0	        ;Number of fixed up
+	IV_FreeMemoryReq   dw 0	        ;Free memory after image in paras
+	IV_AS_Bank	   dw 0	        ;Addr Space bank (segment)
+	IV_AS_StartCode	   dw 0	        ;Addr Space code start (segment)
+	IV_AS_StackOff	   dw 0	        ;Addr Space stack offset
+	IV_AS_StackSeg	   dw 0	        ;Addr Space stack (segment
+	IV_AS_StartOff	   dw 0	        ;Addr Space code start offset
+	IV_AS_StartSeg	   dw 0	        ;Addr Space code start (segment)
+	IV_AS_RAMResv	   dw 0	        ;Addr Space RAM to reserve (segment)
+	IV_HotKey	   dw 0	        ;Hot key
+	IV_ExeDataSeg      dw 0	        ;Data Seg from EXE header
+	IV_CheckSum	   dw 0	        ;For Data Seg before run fixups
+	IV_Name	   	   db 13 dup(0) ;Image name (null terminated)
+	IV_Persistent	   db 0	        ;0 normal, 1 if persistent
+	IV_AS_PhyPage	   dw -1	;Addr Space: Page Id for Int 63h
+	IV_RS_LogicalPage  dw -1	;ROM  Space: Page Id for Int 63h
+	IV_RS_PageCount    dw -1	;ROM  Space: Page count for Int 63h
+IMAGEVEC	ENDS
+
+
+ifdef MOTOWN
+MAX_RIV_PATH	equ	80
+else
+MAX_RIV_PATH	equ	30
+endif
+
+;RAM IMAGE_VECTOR
+; Structure of the image vector record.
+RIMAGEVEC	STRUC
+	RIV_Type	   db 0	        ;Image vector type. See IV_TYPE_?     
+	RIV_DataCmp	   db 0	        ;0: data seg not compressed; else 1   
+	RIV_RS_StartCode   dd 0	        ;ROM space code start location        
+	RIV_RS_SizeCode	   dd 0	        ;ROM space code image size            
+	RIV_RS_StartData   dd 0	        ;ROM space data start location        
+	RIV_RS_SizeData	   dd 0	        ;ROM space data image size            
+	RIV_RS_SizeDataCmp dd 0	        ;ROM space data image cmp size        
+	RIV_RS_StartFixUp  dd 0	        ;ROM space fixup table location       
+	RIV_NumFixUps	   dw 0	        ;Number of fixed up                   
+	RIV_FreeMemoryReq  dw 0	        ;Free memory after image in paras     
+	RIV_AS_Bank	   dw 0	        ;Addr Space bank (segment)            
+	RIV_AS_StartCode   dw 0	        ;Addr Space code start (segment)      
+	RIV_AS_StackOff	   dw 0	        ;Addr Space stack offset              
+	RIV_AS_StackSeg	   dw 0	        ;Addr Space stack (segment)           
+	RIV_AS_StartOff	   dw 0	        ;Addr Space code start offset         
+	RIV_AS_StartSeg	   dw 0	        ;Addr Space code start (segment)      
+	RIV_AS_RAMResv	   dw 0	        ;Addr Space RAM to reserve (segment)  
+	RIV_HotKey	   dw 0	        ;Hot key                              
+	RIV_ExeDataSeg     dw 0	        ;Data Seg from EXE header             
+	RIV_CheckSum	   dw 0	        ;For Data Seg before run fixups       
+	RIV_Name	   db 13 dup(0) ;Image name (null terminated)         
+	RIV_Persistent	   db 0	        ;0 normal, 1 if persistent            
+	RIV_AS_PhyPage	   dw -1	;Addr Space: Page Id for Int 63h      
+	RIV_RS_LogicalPage dw -1	;ROM  Space: Page Id for Int 63h      
+	RIV_RS_PageCount   dw -1	;ROM  Space: Page count for Int 63h   
+
+        IV_Path	           db MAX_RIV_PATH dup (?) ;Start of path name string
+RIMAGEVEC	ENDS
+
+
+
+
+
+; Process Status codes stored in the PCB
+
+PS_CLOSED	equ	0	; not loaded in memory
+PS_ACTIVE	equ	1	; foreground process
+PS_SUSP		equ	2	; suspended 
+PS_BACK		equ	3	; suspended, but wants background timeslice
+
+
+
+;EXM File Header
+; Structure of the initial part of the EXM file
+EXMHDR	STRUC
+	EXM_Sig		dw ?		; signature - must be 4C44h
+	EXM_LastPage	dw ?		; last page size
+	EXM_NumPages	dw ?		; number 512 byte pages in file
+	EXM_NumRelocs	dw ?		; number of relocation items
+	EXM_HdrSize	dw ?		; file header size in paragraphs
+	EXM_MinAlloc	dw ?		; minimum data size
+	EXM_MaxAlloc	dw ?		; reserved
+	EXM_SS		dw ?		; pre-relocation stack seg
+	EXM_SP		dw ?		; initial stack pointer (ignored)
+	EXM_ChkSum	dw ?		; negatice checksum (ignored)
+	EXM_IP		dw ?		; initial instruction pointer
+	EXM_CS		dw ?		; pre-relocation code segment
+	EXM_Reloc	dw ?		; relocation table pointer
+	EXM_DS		dw ?		; pre-relocation data segment
+EXMHDR	ENDS

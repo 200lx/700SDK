@@ -1,0 +1,145 @@
+; SCCS info:   Module syshelp.mac  Version 1.1  Date 11/09/93  Time 16:13:33
+
+; $Header:   T:/HH/INCLUDE/VCS/SYSHELP.MAV   1.1   15 Oct 1992 10:53:56   KIM  $
+;****************************************************************************
+; SYSTEM MANAGER HELP SERVICES MAIN HEADER FILE
+;
+; copyright(c) 1990
+; Lotus Development Corporation
+; All Rights Reserved, Confidential and Proprietary Information
+;
+;****************************************************************************
+;
+; The functions in the help system are called using C conventions.  The
+; functions are listed below:
+;
+;	int _m_help_init(
+;		int dummy,
+;		struct help_state far *h_state,
+;		char far *help_file_name,
+;		int help_handle )
+;
+;	void _m_help_term(
+;		int dummy,
+;		struct help_state far *h_state )
+;
+;	int _m_help_display(
+;		int dummy,
+;		struct help_state far *h_state )
+;
+;	int _m_help_key(
+;		int dummy,
+;		struct help_state far *h_state,
+;		int key )
+;
+; Use the SMCALL macro to make the actual function call.
+;
+;
+;****************************************************************************
+;
+; $Log:   T:/HH/INCLUDE/VCS/SYSHELP.MAV  $
+;  
+;     Rev 1.1   15 Oct 1992 10:53:56   KIM
+;  * * * SERVER DISK CRASH RECOVERY * * *
+;   1) The VCS directory was restored with Build 18 backup tape.
+;   2) This revision is to update files to Build 19.
+;   3) HELP.H has post-Build 19 changes.
+;  
+;     Rev 1.0   03 Dec 1991 20:14:30   DAVID
+;  Initial revision.
+;  
+;****************************************************************************
+; Edit History:
+;
+; Enter edit history in SYSHELP.ASM.
+;****************************************************************************
+
+
+HELP_REV	equ 0		;help revision number
+
+
+;Error Messages & Exit Status
+HLP_DONE		equ 1
+HLP_NO_ERROR		equ 0
+HLP_ERR_OPEN_FAILURE	equ -1
+HLP_ERR_BAD_HANDLE	equ -2
+HLP_ERR_READ_FAILURE	equ -3
+HLP_ERR_WRONG_REV	equ -4
+
+
+;Mark Table Offsets
+
+MARK_CODE	equ 0		;offset to mark code
+MARK_COL	equ 2		;offset to column position
+MARK_ROW	equ 3		;offset to row position
+MARK_LEN	equ 4		;offset to mark length
+MARK_SIZE	equ 5		;offset to mark size
+MAX_MARKS	equ 50		;maximum number of marks per screen
+
+
+;State variable structure
+
+HELP_STACK_SIZE	equ 16		;number of words available on the help stack
+
+HUFF_TABLE_SIZE	equ 1024	;size of the space for the huffman tree
+
+IO_BUFSIZE	equ 128		;I/O buffer size
+
+MAX_HELP_FNAME_LEN	equ 21	;max length of a help path/file name (including null)
+
+
+help_state	struc
+
+nscols		dw 1 dup (?)	;number of columns on the screen
+nsrows		dw 1 dup (?)	;number of rows on the screen
+curs_row	dw 1 dup (?)	;current row screen position
+curs_col	dw 1 dup (?)	;current column screen position
+oldmode		dw 1 dup (?)	;original display mode
+help_start_row	dw 1 dup (?)	;first row of the help screen on the display
+help_end_row	dw 1 dup (?)	;last row of the help screen on the display
+helpflag	db 1 dup (?)	;flag set when help file is open (-1 = open, 0 = not open)
+hcode		dw 1 dup (?)	;current help code which may differ from original after moving through cross references
+helpcode	dw 1 dup (?)	;original help code, code which was passed at help invokation
+hrev		dw 1 dup (?)	;place to read in the help revision # from help file
+hcnt		dw 1 dup (?)	;number of help characters read in
+mark		db 1 dup (?)	;current mark (zero relative)
+markc		db 1 dup (?)	;mark count (number of marks in current screen)
+markp		dw 1 dup (?)	;position of mark in mark buffer
+pos		dd 1 dup (?)	;offset from beginning of file to the desired help screen
+oldkw		dw 1 dup (?)	;old keyword
+oldlen		dw 1 dup (?)	;length of old keyword
+
+order		dw 1 dup (?)	;These variables are used to find the correct
+order0		dw 1 dup (?)	; keyword to move to when moving is up and down.
+maxorder	dw 1 dup (?)	;
+maxmark 	db 1 dup (?)	;
+maxmarkp	dw 1 dup (?)	;
+minorder	dw 1 dup (?)	;
+minmark 	db 1 dup (?)	;
+minmarkp	dw 1 dup (?)	;
+
+screen_cnt	dw 1 dup (?)	;number of help screens in the help file
+
+hiobuf		db IO_BUFSIZE dup (?)		;help io buffer
+hioi		dw 1 dup (?)			;help buffer index
+hhandle		dw 1 dup (?)			;help file handle
+hfile_name	db MAX_HELP_FNAME_LEN dup (?)	;help file name
+
+mark_buf	db MARK_SIZE*MAX_MARKS dup (?)	;mark buffer
+
+hsp		dw 1 dup (?)			;help stack pointer
+
+hstack		dw HELP_STACK_SIZE dup (?)	;help stack
+
+;storage area for huffman coded state
+cur_byte	db 1 dup (?)		;-- coded byte from input file used
+					; to traverse huffman tree
+cur_bit 	db 1 dup (?)		;a mask to indicate when to get next
+					; input byte (initialized to 80h)
+
+tree_siz	dw 1 dup (?)		;huffman table size got from help file header
+htxt_siz	dw 1 dup (?)		;cur hlp scr siz preceding hlp txt
+
+huff_tbl	db HUFF_TABLE_SIZE dup (?) 	;space for the huffman tree
+
+help_state	ends

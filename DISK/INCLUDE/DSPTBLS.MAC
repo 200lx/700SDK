@@ -1,0 +1,45 @@
+; SCCS info:   Module dsptbls.mac  Version 1.1  Date 11/09/93  Time 16:10:31
+
+;****************************************************************************
+; $Header:   T:/HH/INCLUDE/VCS/DSPTBLS.MAV   1.2   15 Oct 1992 10:53:04   KIM  $
+;****************************************************************************
+; COUGAR / DIAMOND SYSMGR
+;
+; copyright(c) 1992
+; Lotus Development Corporation
+; All Rights Reserved
+;
+; DspTbls.Mac - New SM API Dispatch Tables Header
+;
+;****************************************************************************
+; $Log:   T:/HH/INCLUDE/VCS/DSPTBLS.MAV  $
+;  
+;     Rev 1.2   15 Oct 1992 10:53:04   KIM
+;  * * * SERVER DISK CRASH RECOVERY * * *
+;   1) The VCS directory was restored with Build 18 backup tape.
+;   2) This revision is to update files to Build 19.
+;   3) HELP.H has post-Build 19 changes.
+;  
+;     Rev 1.1   29 Jul 1992 13:07:42   HOMI
+;  Replaced field Flag with StartAbs
+;  
+;     Rev 1.0   09 Jun 1992 10:40:50   HOMI
+;  Initial revision.
+;****************************************************************************
+
+FnctTblHeader           STRUC           ; FTH
+        FTH_Num         db      ?       ; Class number
+;       FTH_Flag        db      ?       ; Bit 0 set on disables table
+        FTH_StartAbs    db      ?       ; Constant start position 
+        FTH_NextTbl     dd      ?       ; far pointer to next table
+        FTH_CS          dw      ?       ; code segment of functions in table
+        FTH_RamRomPg    EQU     WORD PTR FTH_RamPg
+        FTH_RamPg       db      ?       ; ram page
+        FTH_RomPg       db      ?       ; rom page
+        FTH_DevPgs      EQU     WORD PTR FTH_RomDev
+        FTH_RomDev      db      ?       ; rom device id
+        FTH_Pages       db      ?       ; pages to map
+        FTH_Start       db      ?       ; first function number in table
+        FTH_End         db      ?       ; last function number in table
+FnctTblHeader           ENDS
+

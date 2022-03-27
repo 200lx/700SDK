@@ -1,0 +1,9 @@
+; SCCS info:   Module xbshdr.mac  Version 1.1  Date 11/09/93  Time 16:14:20
+
+;The following structure describes the format of the DIAMOND
+;view registration.
+S_VIEW	STRUC
+	vw_owner	db	?	  ;TCB # of register of view
+	vw_index	db	?	  ;View index set by owner.
+	vw_descr	db	32 dup(?) ;View description set by owner
+S_VIEW ENDS

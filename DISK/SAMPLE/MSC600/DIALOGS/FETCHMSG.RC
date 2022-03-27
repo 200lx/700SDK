@@ -1,0 +1,36 @@
+/* SCCS Information -- Module %M%  Version %I%  Date %G%  Time %U% */
+
+/***************************************************************************
+ **  Fetch SMS Message Dialog                                             **
+ ***************************************************************************/
+
+#ifndef FetchMessageHandler
+int far FetchMessageHandler(PWINDOW Window, WORD Message, WORD Data, WORD Extra);
+#endif
+#ifndef MultiEdit
+int far MultiEdit(PWINDOW Window, WORD Message, WORD Data, WORD Extra);
+#endif
+
+extern char far *msgFetchDlgTitle;
+extern char far *msgFetchMsg;
+extern char far *msgFetchNextMsg;
+extern char far *msgExit;
+
+extern FKEY FetchDlgFKeys[];
+
+/*** FetchDlg Dialog Array ***/
+WINDOW FetchDlgArray[]={
+  {PushButton,500,106,10,20,			/* 2 = &Send */
+   &msgFetchNextMsg,(PSTR)CMD_FETCH,0,0|PUSHB_SENDMSG|STYLE_PUSHBUTTON,0,0,0,NO_HELP},
+  {PushButton,500,146,10,20,			/* 3 = &Cancel */
+   &msgExit,(PSTR)CMD_ESC,ESCKEY,0|PUSHB_SENDMSG|STYLE_PUSHBUTTON,0,0,0,NO_HELP}
+};
+
+/*** FetchDlg Dialog Window ***/
+WINDOW FetchMsgDlg={FetchMessageHandler,
+       40,15,546,170,
+       &msgFetchDlgTitle,(PSTR)FetchDlgArray,
+       countof(FetchDlgArray),STYLE_PUSHB_WIDTH,
+       NULL,FetchDlgFKeys,NO_MENU,NO_HELP};
+
+

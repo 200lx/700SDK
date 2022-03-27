@@ -1,0 +1,745 @@
+Stack Allocation = 5120 bytes
+
+ Start  Stop   Length Name                   Class
+ 00000H 02503H 02504H _TEXT                  CODE
+ 02504H 02668H 00165H COUGRAPH_TEXT          CODE
+ 0266AH 02954H 002EBH CAPSEG                 CODE
+ 02956H 02B9CH 00247H DRAWTEXT_TEXT          CODE
+ 02B9EH 02C78H 000DBH CLOCK_TEXT             CODE
+ 02C7AH 02CA1H 00028H CSVC_HP_TEXT           CODE
+ 02CA2H 02D9DH 000FCH LHSTUB_TEXT            CODE
+ 02DA0H 02DA1H 00002H EMULATOR_TEXT          CODE
+ 02DA2H 02DA2H 00000H C_ETEXT                ENDCODE
+ 02DB0H 02DB0H 00000H EMULATOR_DATA          FAR_DATA
+ 02DB0H 02DF1H 00042H NULL                   BEGDATA
+ 02DF2H 03BEFH 00DFEH _DATA                  DATA
+ 03BF0H 03BF1H 00002H XIQC                   DATA
+ 03BF2H 03BFDH 0000CH DBDATA                 DATA
+ 03BFEH 03C0BH 0000EH CDATA                  DATA
+ 03C0CH 03C0CH 00000H XIFB                   DATA
+ 03C0CH 03C0CH 00000H XIF                    DATA
+ 03C0CH 03C0CH 00000H XIFE                   DATA
+ 03C0CH 03C0CH 00000H XIB                    DATA
+ 03C0CH 03C0CH 00000H XI                     DATA
+ 03C0CH 03C0CH 00000H XIE                    DATA
+ 03C0CH 03C0CH 00000H XPB                    DATA
+ 03C0CH 03C0CH 00000H XP                     DATA
+ 03C0CH 03C0CH 00000H XPE                    DATA
+ 03C0CH 03C0CH 00000H XCB                    DATA
+ 03C0CH 03C0CH 00000H XC                     DATA
+ 03C0CH 03C0CH 00000H XCE                    DATA
+ 03C0CH 03C0CH 00000H XCFB                   DATA
+ 03C0CH 03C0CH 00000H XCFCRT                 DATA
+ 03C0CH 03C0CH 00000H XCF                    DATA
+ 03C0CH 03C0CH 00000H XCFE                   DATA
+ 03C0CH 03C0CH 00000H XIFCB                  DATA
+ 03C0CH 03C0CH 00000H XIFU                   DATA
+ 03C0CH 03C0CH 00000H XIFL                   DATA
+ 03C0CH 03C0CH 00000H XIFM                   DATA
+ 03C0CH 03C0CH 00000H XIFCE                  DATA
+ 03C0CH 03C0CH 00000H CONST                  CONST
+ 03C0CH 03C13H 00008H HDR                    MSG
+ 03C14H 03CE9H 000D6H MSG                    MSG
+ 03CEAH 03CEBH 00002H PAD                    MSG
+ 03CECH 03CECH 00001H EPAD                   MSG
+ 03CEEH 03F43H 00256H _BSS                   BSS
+ 03F44H 03F44H 00000H XOB                    BSS
+ 03F44H 03F44H 00000H XO                     BSS
+ 03F44H 03F44H 00000H XOE                    BSS
+ 03F44H 03F44H 00000H XOFB                   BSS
+ 03F44H 03F44H 00000H XOF                    BSS
+ 03F44H 03F44H 00000H XOFE                   BSS
+ 03F50H 0505FH 01110H c_common               BSS
+ 05060H 0645FH 01400H STACK                  STACK
+
+ Origin   Group
+ 02DB:0   DGROUP
+
+  Address         Publics by Name
+
+ 02C7:0030       patch_service_interrupt
+ 02DB:0422       _ALLCP_HIGH
+ 02DB:229E       _app_event
+ 02C7:0031       _break_point
+ 02DB:198A       _BuffPtrs
+ 02DB:186C       _CapData
+ 02DB:0CBC       _chtype
+ 02CA:0050       _ClearError
+ 02CA:008C       _ClearRect
+ 02DB:0CBA       _ClockFont
+ 0000:16FA       _code_page
+ 0295:01F7       _CountEscapes
+ 02DB:1494       _CountsPerMs
+ 0000:0410       _CreateMainView
+ 02C7:000A       _c_service
+ 02C7:001C       _c_service2
+ 02C7:001C       _c_service2_based_ptr
+ 02C7:001C       _c_service2_far_mem
+ 02C7:001C       _c_service2_far_ptr
+ 02C7:001C       _c_service2_free_static
+ 02C7:001C       _c_service2_get_avail_mem
+ 02C7:001C       _c_service2_long_based
+ 02C7:001C       _c_service2_long_far
+ 02C7:001C       _c_service2_near_ptr
+ 02C7:001C       _c_service2_reg_based
+ 02C7:001C       _c_service2_reg_far
+ 02C7:000A       _c_service_based_ptr
+ 02C7:000A       _c_service_far_mem
+ 02C7:000A       _c_service_far_ptr
+ 02C7:000A       _c_service_free_static
+ 02C7:000A       _c_service_get_avail_mem
+ 02C7:000A       _c_service_long_based
+ 02C7:000A       _c_service_long_far
+ 02C7:000A       _c_service_near_ptr
+ 02C7:000A       _c_service_reg_based
+ 02C7:000A       _c_service_reg_far
+ 02CA:0008       _DeactivateLHAPI
+ 0000:1BFD       _Delay
+ 0000:0010       _DisplayMsg
+ 0000:03FE       _DoBeep
+ 0000:021A       _DoFetchSMS
+ 02DB:1792       _Done
+ 0000:0408       _DoQuit
+ 0000:02D0       _DoSendSMS
+ 02DB:219E       _DOS_TO_ETSI
+ 02CA:0068       _DrawChar
+ 02CA:006E       _DrawFKeys
+ 02CA:00EC       _DrawNChars
+ 02CA:0062       _DrawText
+ 0295:0136       _DrawTextShell
+ 02DB:0F3E       _edata
+ 02B9:00AC       _EnableClock
+ 02DB:22B0       _end
+ 02DB:1496       _err
+ 02DB:0DFE       _errno
+ 02DB:199E       _EscBuff
+ 02DB:1498       _ETSI_TO_DOS
+ 02DB:04A2       _ETSI_TO_PAGE437
+ 02DB:09A2       _ETSI_TO_PAGE437G
+ 02DB:0AA2       _ETSI_TO_PAGE437T
+ 02DB:05A2       _ETSI_TO_PAGE850
+ 02DB:06A2       _ETSI_TO_PAGE852
+ 02DB:07A2       _ETSI_TO_PAGE860
+ 02DB:08A2       _ETSI_TO_PAGE865
+ 02DB:0BA2       _ETSI_TO_PAGE866
+ 0000:05A2       _EventDispatcher
+ 0000:1F8E       _exit
+ 02DB:010A       _FetchDlgArray
+ 02DB:0374       _FetchDlgFKeys
+ 0000:023E       _FetchMessageHandler
+ 02DB:015A       _FetchMsgDlg
+ 02DB:159A       _FirstTime
+ 0000:03D6       _FixupFarPtrs
+ 02DB:02E2       _fkeyExit
+ 02DB:02CE       _fkeyFetch
+ 02DB:02D8       _fkeyNext
+ 02DB:02EC       _fkeyQuit
+ 02DB:02C4       _fkeySend
+ 0000:1B10       _GetBIOSTicks
+ 02CA:00DA       _GetCurrentFont
+ 02CA:00A4       _GetDefaultFont
+ 02CA:004A       _GetError
+ 02CA:005C       _GetErrorHandler
+ 02CA:003E       _GetFocus
+ 02CA:001A       _GetLHAPIBlockPtr
+ 02CA:00BC       _GetLocalClipping
+ 0250:0054       _G_ClipL
+ 0250:00AC       _G_ColorSel
+ 0250:0010       _G_Defaults
+ 0250:007F       _G_Draw
+ 0250:0015       _G_FillMask
+ 0250:013F       _G_Font
+ 0250:0133       _G_GetFont
+ 0250:0025       _G_GetInfo
+ 0250:00DF       _G_ImageGet
+ 0250:00FD       _G_ImagePut
+ 0250:00C4       _G_LineType
+ 0250:0045       _G_LorgA
+ 0250:0004       _G_Mode
+ 0250:009D       _G_Move
+ 0250:008E       _G_Point
+ 0250:00D0       _G_PointRead
+ 0250:006D       _G_Rect
+ 0250:00B8       _G_RepRule
+ 0250:014F       _G_Scroll
+ 0250:0035       _G_SetInfo
+ 0250:0116       _G_Text
+ 02B9:000E       _HandleClock
+ 0000:05D6       _Initialize
+ 02CA:0002       _InitializeLHAPI
+ 0000:1560       _Initialize_Comm
+ 0000:16A7       _InitModem_and_EnterSMS
+ 0000:183E       _init_buffer
+ 02DB:1598       _insymbol
+ 02CA:00C2       _IntersectLocalClipping
+ 0000:193B       _is_alphabet
+ 02DB:11A2       _keybez
+ 02CA:0092       _Line
+ 02DB:11A4       _LineBuff
+ 0266:006D       _lmemmove
+ 0266:01AF       _lmemset
+ 0266:0090       _lstrcat
+ 0266:027A       _lstrcenter
+ 0266:013F       _lstrcmp
+ 0266:017C       _lstrcmpi
+ 0266:01CC       _lstrcontains
+ 0266:0025       _lstrcpy
+ 0266:0043       _lstrcpyto
+ 0266:025B       _lstrcpy_nonull
+ 0266:00B3       _lstrdel
+ 0266:0101       _lstrinsch
+ 0266:000A       _lstrlen
+ 0266:0206       _lstrstrip
+ 0000:0652       _main
+ 02DB:0306       _menuFetch
+ 02DB:0312       _menuOperation
+ 02DB:031C       _menuQuit
+ 02DB:02F8       _menuSend
+ 0000:1B43       _Ms2Tics
+ 02DB:024A       _msgAppTopLine
+ 02DB:1D9E       _MsgBuff
+ 02DB:02BA       _msgCancel
+ 02DB:02AE       _msgExit
+ 02DB:0276       _msgFetchDlgTitle
+ 02DB:02A4       _msgFetchNextMsg
+ 02DB:0322       _msgNull
+ 02DB:0282       _msgPhone
+ 02DB:029A       _msgSend
+ 02DB:0260       _msgSendDlgTitle
+ 02DB:0290       _msgSendMsg
+ 02DB:0228       _msgTestApp
+ 02DB:0182       _newphone
+ 0000:1B60       _NewTimer
+ 02DB:0384       _OpMenu
+ 02CA:0080       _Outline
+ 02DB:186A       _outsymbol
+ 02DB:0A22       _PAGE437G_TO_ETSI
+ 02DB:0B22       _PAGE437T_TO_ETSI
+ 02DB:0522       _PAGE437_TO_ETSI
+ 02DB:0622       _PAGE850_TO_ETSI
+ 02DB:0722       _PAGE852_TO_ETSI
+ 02DB:0822       _PAGE860_TO_ETSI
+ 02DB:0922       _PAGE865_TO_ETSI
+ 02DB:0C22       _PAGE866_TO_ETSI
+ 02CA:007A       _Panel
+ 02DB:13A4       _PhoneNum
+ 0000:0546       _ProcessEvent
+ 0000:16E7       _QuitSMS_and_CloseModem
+ 02CA:000E       _ReactivateLHAPI
+ 02CA:0074       _Rectangle
+ 02DB:13B9       _RecvSMSMsg
+ 02CA:0098       _RegisterFont
+ 02CA:0038       _ResetAlt
+ 02CA:00E6       _ResetRepRule
+ 0000:1B97       _ResetTimer
+ 02CA:00CE       _ResetVideo
+ 0000:18DE       _rx_one_char
+ 0000:1B27       _Secs2Tics
+ 02CA:0020       _SendAllMsg
+ 02DB:03F0       _SendBuff
+ 02DB:0042       _SendDlgArray
+ 02DB:0364       _SendDlgFKeys
+ 02CA:0026       _SendFocusMsg
+ 0000:0368       _SendMessageHandler
+ 02CA:002C       _SendMsg
+ 02DB:00E2       _SendMsgDlg
+ 02DB:1794       _SendSMSMsg
+ 02CA:00D4       _SetCurrentFont
+ 02CA:009E       _SetDefaultFont
+ 02CA:0044       _SetError
+ 02CA:0056       _SetErrorHandler
+ 0295:0214       _SetFontNorm
+ 02CA:00B0       _SetGlobalClipping
+ 02CA:00F2       _SetHelpFkey
+ 02CA:00B6       _SetLocalClipping
+ 02CA:00AA       _SetMenuFont
+ 02CA:00E0       _SetRepRule
+ 0000:1705       _SetupETSICodePage
+ 02CA:0086       _ShadowBox
+ 02CA:00C8       _ShowSymbol
+ 0000:11F7       _SMS_ASCIItoETSI
+ 0000:1861       _SMS_CalculateBCS
+ 0000:18A0       _SMS_CheckBCS
+ 0000:1687       _SMS_CloseComm
+ 02DB:0212       _sms_comm_port
+ 02DB:0214       _sms_comm_settings
+ 0000:14C9       _SMS_EnterSMSMode
+ 0000:0672       _SMS_ETSItoASCII
+ 0000:0F07       _SMS_FetchFirstMessage
+ 0000:0F17       _SMS_FetchNextMessage
+ 0000:0E8B       _SMS_FetchOneMessage
+ 0000:0F27       _SMS_FetchResponse
+ 0000:0AA8       _SMS_GetOAAddress
+ 0000:0DF3       _SMS_GetOneMessage
+ 0000:09FB       _SMS_GetSMSCAddress
+ 0000:0B8C       _SMS_GetSMSCTimeStamp
+ 02DB:11A0       _sms_handle
+ 0000:065C       _SMS_InitRecvPacket
+ 0000:0FB8       _SMS_InitSendPacket
+ 0000:0FE0       _SMS_MakeAddr
+ 0000:119A       _SMS_MakeDestAddr
+ 0000:1A23       _SMS_MakeMessage
+ 0000:10E3       _SMS_MakeSMSCAddr
+ 0000:11AD       _SMS_MakeValidityPeriod
+ 0000:0856       _SMS_Mode_Processor
+ 0000:15E5       _SMS_OpenComm
+ 0000:0D83       _SMS_ProcessMessage
+ 0000:0C0F       _SMS_ProcessSMdata
+ 0000:1513       _SMS_QuitSMSmode
+ 02DB:159C       _SMS_RxMessage
+ 02DB:1790       _SMS_RxMessage_head
+ 0000:1482       _SMS_SendBytes
+ 0000:135E       _SMS_SendOneMessage
+ 02DB:0DBC       _SpecialString
+ 02DB:0326       _StringTable
+ 02CA:0032       _SubclassMsg
+ 02CA:00F8       _SyncLHAPIKeyState
+ 02DB:0CB4       _TickingClock
+ 0000:1BAC       _TimerExpired
+ 0000:1C3D       _tolower_
+ 02DB:03C8       _TopCard
+ 0000:0422       _TopCardHandler
+ 02DB:034C       _TopFKeys
+ 02DB:03A6       _TopMenu
+ 0000:1C26       _toupper_
+ 0000:05CC       _Uninitialize
+ 02CA:0014       _UninitializeLHAPI
+ 0000:195F       _wait_for
+ 02DB:0DE2       __acfinfo
+ 0000:9876  Abs  __acrtmsg
+ 0000:9876  Abs  __acrtused
+ 0000:D6D6  Abs  __aDBdoswp
+ 02DB:0E38       __adbgmsg
+ 02DB:0DC4       __aexit_rtn
+ 02DB:0DF0       __aintdiv
+ 02DB:0E3C       __amblksiz
+ 0000:1E91       __amsg_exit
+ 0000:1C54       __aNldiv
+ 0000:1CEE       __aNlmul
+ 0000:1D20       __aNlrem
+ 02DB:0042       __anullsize
+ 0000:1CEE       __aNulmul
+ 02DB:0DDC       __aseghi
+ 02DB:0DDE       __aseglo
+ 02DB:0DC6       __asizds
+ 0000:1DC0       __astart
+ 02DB:0DC2       __atopsp
+ 0000:1F9D       __cexit
+ 02DB:0E2F       __child
+ 0000:1EBC       __cinit
+ 0000:1E82       __cintDIV
+ 02DB:0E0B       __cpumode
+ 0000:201C       __ctermsub
+ 0000:1FA7       __c_exit
+ 0000:1EBA       __dataseg
+ 02DB:0E0C       __doserrno
+ 02DB:0F3E       __edata
+ 02DA:0000       __EmDataSeg
+ 02DB:22B0       __end
+ 02DB:0E28       __environ
+ 0000:1F95       __exit
+ 02DB:0E37       __exitflag
+ 02DB:0DF4       __fac
+ 0000:22E0       __farstub
+ 02DB:0DE0       __fDosExt
+ 0000:2058       __FF_MSGBANNER
+ 0000:240B       __findlast
+ 02DB:0E50       __fpinit
+ 0000:22E2       __fptrap
+ 0000:232E       __growseg
+ 0000:23BA       __incseg
+ 02DB:0E32       __intno
+ 0000:230A       __myalloc
+ 02DB:0E0E       __nfile
+ 0000:242C       __nfree
+ 02DB:0DC8       __nheap_desc
+ 0000:244D       __nmalloc
+ 0000:2280       __NMSG_TEXT
+ 0000:22AB       __NMSG_WRITE
+ 0000:22E8       __nullcheck
+ 02DB:0E0C       __oserr
+ 02DB:0E10       __osfile
+ 02DB:0E07       __osmajor
+ 02DB:0E06       __osminor
+ 02DB:0E0A       __osmode
+ 02DB:0E06       __osver
+ 02DB:0E08       __osversion
+ 02DB:0E31       __ovlflag
+ 02DB:0E33       __ovlvec
+ 02DB:0E2A       __pgmptr
+ 02DB:0E3E       __pnhNearHeap
+ 02DB:0E04       __psp
+ 02DB:0E02       __pspadr
+ 0000:2488       __searchseg
+ 0000:2078       __setargv
+ 0000:2202       __setenvp
+ 02DB:0E00       __umaskval
+ 02DB:0E48       ___aDBexit
+ 02DB:0E46       ___aDBrterr
+ 02DB:0E44       ___aDBswpchk
+ 02DB:0E42       ___aDBswpflg
+ 02DB:0E24       ___argc
+ 02DB:0E26       ___argv
+ 02DB:0E40       ___qczrinit
+
+  Address         Publics by Value
+
+ 0000:0010       _DisplayMsg
+ 0000:021A       _DoFetchSMS
+ 0000:023E       _FetchMessageHandler
+ 0000:02D0       _DoSendSMS
+ 0000:0368       _SendMessageHandler
+ 0000:03D6       _FixupFarPtrs
+ 0000:03FE       _DoBeep
+ 0000:0408       _DoQuit
+ 0000:0410       _CreateMainView
+ 0000:0422       _TopCardHandler
+ 0000:0546       _ProcessEvent
+ 0000:05A2       _EventDispatcher
+ 0000:05CC       _Uninitialize
+ 0000:05D6       _Initialize
+ 0000:0652       _main
+ 0000:065C       _SMS_InitRecvPacket
+ 0000:0672       _SMS_ETSItoASCII
+ 0000:0856       _SMS_Mode_Processor
+ 0000:09FB       _SMS_GetSMSCAddress
+ 0000:0AA8       _SMS_GetOAAddress
+ 0000:0B8C       _SMS_GetSMSCTimeStamp
+ 0000:0C0F       _SMS_ProcessSMdata
+ 0000:0D83       _SMS_ProcessMessage
+ 0000:0DF3       _SMS_GetOneMessage
+ 0000:0E8B       _SMS_FetchOneMessage
+ 0000:0F07       _SMS_FetchFirstMessage
+ 0000:0F17       _SMS_FetchNextMessage
+ 0000:0F27       _SMS_FetchResponse
+ 0000:0FB8       _SMS_InitSendPacket
+ 0000:0FE0       _SMS_MakeAddr
+ 0000:10E3       _SMS_MakeSMSCAddr
+ 0000:119A       _SMS_MakeDestAddr
+ 0000:11AD       _SMS_MakeValidityPeriod
+ 0000:11F7       _SMS_ASCIItoETSI
+ 0000:135E       _SMS_SendOneMessage
+ 0000:1482       _SMS_SendBytes
+ 0000:14C9       _SMS_EnterSMSMode
+ 0000:1513       _SMS_QuitSMSmode
+ 0000:1560       _Initialize_Comm
+ 0000:15E5       _SMS_OpenComm
+ 0000:1687       _SMS_CloseComm
+ 0000:16A7       _InitModem_and_EnterSMS
+ 0000:16E7       _QuitSMS_and_CloseModem
+ 0000:16FA       _code_page
+ 0000:1705       _SetupETSICodePage
+ 0000:183E       _init_buffer
+ 0000:1861       _SMS_CalculateBCS
+ 0000:18A0       _SMS_CheckBCS
+ 0000:18DE       _rx_one_char
+ 0000:193B       _is_alphabet
+ 0000:195F       _wait_for
+ 0000:1A23       _SMS_MakeMessage
+ 0000:1B10       _GetBIOSTicks
+ 0000:1B27       _Secs2Tics
+ 0000:1B43       _Ms2Tics
+ 0000:1B60       _NewTimer
+ 0000:1B97       _ResetTimer
+ 0000:1BAC       _TimerExpired
+ 0000:1BFD       _Delay
+ 0000:1C26       _toupper_
+ 0000:1C3D       _tolower_
+ 0000:1C54       __aNldiv
+ 0000:1CEE       __aNulmul
+ 0000:1CEE       __aNlmul
+ 0000:1D20       __aNlrem
+ 0000:1DC0       __astart
+ 0000:1E82       __cintDIV
+ 0000:1E91       __amsg_exit
+ 0000:1EBA       __dataseg
+ 0000:1EBC       __cinit
+ 0000:1F8E       _exit
+ 0000:1F95       __exit
+ 0000:1F9D       __cexit
+ 0000:1FA7       __c_exit
+ 0000:201C       __ctermsub
+ 0000:2058       __FF_MSGBANNER
+ 0000:2078       __setargv
+ 0000:2202       __setenvp
+ 0000:2280       __NMSG_TEXT
+ 0000:22AB       __NMSG_WRITE
+ 0000:22E0       __farstub
+ 0000:22E2       __fptrap
+ 0000:22E8       __nullcheck
+ 0000:230A       __myalloc
+ 0000:232E       __growseg
+ 0000:23BA       __incseg
+ 0000:240B       __findlast
+ 0000:242C       __nfree
+ 0000:244D       __nmalloc
+ 0000:2488       __searchseg
+ 0250:0004       _G_Mode
+ 0250:0010       _G_Defaults
+ 0250:0015       _G_FillMask
+ 0250:0025       _G_GetInfo
+ 0250:0035       _G_SetInfo
+ 0250:0045       _G_LorgA
+ 0250:0054       _G_ClipL
+ 0250:006D       _G_Rect
+ 0250:007F       _G_Draw
+ 0250:008E       _G_Point
+ 0250:009D       _G_Move
+ 0250:00AC       _G_ColorSel
+ 0250:00B8       _G_RepRule
+ 0250:00C4       _G_LineType
+ 0250:00D0       _G_PointRead
+ 0250:00DF       _G_ImageGet
+ 0250:00FD       _G_ImagePut
+ 0250:0116       _G_Text
+ 0250:0133       _G_GetFont
+ 0250:013F       _G_Font
+ 0250:014F       _G_Scroll
+ 0266:000A       _lstrlen
+ 0266:0025       _lstrcpy
+ 0266:0043       _lstrcpyto
+ 0266:006D       _lmemmove
+ 0266:0090       _lstrcat
+ 0266:00B3       _lstrdel
+ 0266:0101       _lstrinsch
+ 0266:013F       _lstrcmp
+ 0266:017C       _lstrcmpi
+ 0266:01AF       _lmemset
+ 0266:01CC       _lstrcontains
+ 0266:0206       _lstrstrip
+ 0266:025B       _lstrcpy_nonull
+ 0266:027A       _lstrcenter
+ 0295:0136       _DrawTextShell
+ 0295:01F7       _CountEscapes
+ 0295:0214       _SetFontNorm
+ 02B9:000E       _HandleClock
+ 02B9:00AC       _EnableClock
+ 02C7:000A       _c_service_reg_based
+ 02C7:000A       _c_service_long_far
+ 02C7:000A       _c_service_far_ptr
+ 02C7:000A       _c_service_long_based
+ 02C7:000A       _c_service_based_ptr
+ 02C7:000A       _c_service_far_mem
+ 02C7:000A       _c_service_free_static
+ 02C7:000A       _c_service_near_ptr
+ 02C7:000A       _c_service_reg_far
+ 02C7:000A       _c_service_get_avail_mem
+ 02C7:000A       _c_service
+ 02C7:001C       _c_service2_far_ptr
+ 02C7:001C       _c_service2_far_mem
+ 02C7:001C       _c_service2_near_ptr
+ 02C7:001C       _c_service2_reg_based
+ 02C7:001C       _c_service2_reg_far
+ 02C7:001C       _c_service2_based_ptr
+ 02C7:001C       _c_service2_get_avail_mem
+ 02C7:001C       _c_service2_long_based
+ 02C7:001C       _c_service2
+ 02C7:001C       _c_service2_long_far
+ 02C7:001C       _c_service2_free_static
+ 02C7:0030       patch_service_interrupt
+ 02C7:0031       _break_point
+ 02CA:0002       _InitializeLHAPI
+ 02CA:0008       _DeactivateLHAPI
+ 02CA:000E       _ReactivateLHAPI
+ 02CA:0014       _UninitializeLHAPI
+ 02CA:001A       _GetLHAPIBlockPtr
+ 02CA:0020       _SendAllMsg
+ 02CA:0026       _SendFocusMsg
+ 02CA:002C       _SendMsg
+ 02CA:0032       _SubclassMsg
+ 02CA:0038       _ResetAlt
+ 02CA:003E       _GetFocus
+ 02CA:0044       _SetError
+ 02CA:004A       _GetError
+ 02CA:0050       _ClearError
+ 02CA:0056       _SetErrorHandler
+ 02CA:005C       _GetErrorHandler
+ 02CA:0062       _DrawText
+ 02CA:0068       _DrawChar
+ 02CA:006E       _DrawFKeys
+ 02CA:0074       _Rectangle
+ 02CA:007A       _Panel
+ 02CA:0080       _Outline
+ 02CA:0086       _ShadowBox
+ 02CA:008C       _ClearRect
+ 02CA:0092       _Line
+ 02CA:0098       _RegisterFont
+ 02CA:009E       _SetDefaultFont
+ 02CA:00A4       _GetDefaultFont
+ 02CA:00AA       _SetMenuFont
+ 02CA:00B0       _SetGlobalClipping
+ 02CA:00B6       _SetLocalClipping
+ 02CA:00BC       _GetLocalClipping
+ 02CA:00C2       _IntersectLocalClipping
+ 02CA:00C8       _ShowSymbol
+ 02CA:00CE       _ResetVideo
+ 02CA:00D4       _SetCurrentFont
+ 02CA:00DA       _GetCurrentFont
+ 02CA:00E0       _SetRepRule
+ 02CA:00E6       _ResetRepRule
+ 02CA:00EC       _DrawNChars
+ 02CA:00F2       _SetHelpFkey
+ 02CA:00F8       _SyncLHAPIKeyState
+ 02DA:0000       __EmDataSeg
+ 02DB:0042       __anullsize
+ 02DB:0042       _SendDlgArray
+ 02DB:00E2       _SendMsgDlg
+ 02DB:010A       _FetchDlgArray
+ 02DB:015A       _FetchMsgDlg
+ 02DB:0182       _newphone
+ 02DB:0212       _sms_comm_port
+ 02DB:0214       _sms_comm_settings
+ 02DB:0228       _msgTestApp
+ 02DB:024A       _msgAppTopLine
+ 02DB:0260       _msgSendDlgTitle
+ 02DB:0276       _msgFetchDlgTitle
+ 02DB:0282       _msgPhone
+ 02DB:0290       _msgSendMsg
+ 02DB:029A       _msgSend
+ 02DB:02A4       _msgFetchNextMsg
+ 02DB:02AE       _msgExit
+ 02DB:02BA       _msgCancel
+ 02DB:02C4       _fkeySend
+ 02DB:02CE       _fkeyFetch
+ 02DB:02D8       _fkeyNext
+ 02DB:02E2       _fkeyExit
+ 02DB:02EC       _fkeyQuit
+ 02DB:02F8       _menuSend
+ 02DB:0306       _menuFetch
+ 02DB:0312       _menuOperation
+ 02DB:031C       _menuQuit
+ 02DB:0322       _msgNull
+ 02DB:0326       _StringTable
+ 02DB:034C       _TopFKeys
+ 02DB:0364       _SendDlgFKeys
+ 02DB:0374       _FetchDlgFKeys
+ 02DB:0384       _OpMenu
+ 02DB:03A6       _TopMenu
+ 02DB:03C8       _TopCard
+ 02DB:03F0       _SendBuff
+ 02DB:0422       _ALLCP_HIGH
+ 02DB:04A2       _ETSI_TO_PAGE437
+ 02DB:0522       _PAGE437_TO_ETSI
+ 02DB:05A2       _ETSI_TO_PAGE850
+ 02DB:0622       _PAGE850_TO_ETSI
+ 02DB:06A2       _ETSI_TO_PAGE852
+ 02DB:0722       _PAGE852_TO_ETSI
+ 02DB:07A2       _ETSI_TO_PAGE860
+ 02DB:0822       _PAGE860_TO_ETSI
+ 02DB:08A2       _ETSI_TO_PAGE865
+ 02DB:0922       _PAGE865_TO_ETSI
+ 02DB:09A2       _ETSI_TO_PAGE437G
+ 02DB:0A22       _PAGE437G_TO_ETSI
+ 02DB:0AA2       _ETSI_TO_PAGE437T
+ 02DB:0B22       _PAGE437T_TO_ETSI
+ 02DB:0BA2       _ETSI_TO_PAGE866
+ 02DB:0C22       _PAGE866_TO_ETSI
+ 02DB:0CB4       _TickingClock
+ 02DB:0CBA       _ClockFont
+ 02DB:0CBC       _chtype
+ 02DB:0DBC       _SpecialString
+ 02DB:0DC2       __atopsp
+ 02DB:0DC4       __aexit_rtn
+ 02DB:0DC6       __asizds
+ 02DB:0DC8       __nheap_desc
+ 02DB:0DDC       __aseghi
+ 02DB:0DDE       __aseglo
+ 02DB:0DE0       __fDosExt
+ 02DB:0DE2       __acfinfo
+ 02DB:0DF0       __aintdiv
+ 02DB:0DF4       __fac
+ 02DB:0DFE       _errno
+ 02DB:0E00       __umaskval
+ 02DB:0E02       __pspadr
+ 02DB:0E04       __psp
+ 02DB:0E06       __osver
+ 02DB:0E06       __osminor
+ 02DB:0E07       __osmajor
+ 02DB:0E08       __osversion
+ 02DB:0E0A       __osmode
+ 02DB:0E0B       __cpumode
+ 02DB:0E0C       __oserr
+ 02DB:0E0C       __doserrno
+ 02DB:0E0E       __nfile
+ 02DB:0E10       __osfile
+ 02DB:0E24       ___argc
+ 02DB:0E26       ___argv
+ 02DB:0E28       __environ
+ 02DB:0E2A       __pgmptr
+ 02DB:0E2F       __child
+ 02DB:0E31       __ovlflag
+ 02DB:0E32       __intno
+ 02DB:0E33       __ovlvec
+ 02DB:0E37       __exitflag
+ 02DB:0E38       __adbgmsg
+ 02DB:0E3C       __amblksiz
+ 02DB:0E3E       __pnhNearHeap
+ 02DB:0E40       ___qczrinit
+ 02DB:0E42       ___aDBswpflg
+ 02DB:0E44       ___aDBswpchk
+ 02DB:0E46       ___aDBrterr
+ 02DB:0E48       ___aDBexit
+ 02DB:0E50       __fpinit
+ 02DB:0F3E       _edata
+ 02DB:0F3E       __edata
+ 02DB:11A0       _sms_handle
+ 02DB:11A2       _keybez
+ 02DB:11A4       _LineBuff
+ 02DB:13A4       _PhoneNum
+ 02DB:13B9       _RecvSMSMsg
+ 02DB:1494       _CountsPerMs
+ 02DB:1496       _err
+ 02DB:1498       _ETSI_TO_DOS
+ 02DB:1598       _insymbol
+ 02DB:159A       _FirstTime
+ 02DB:159C       _SMS_RxMessage
+ 02DB:1790       _SMS_RxMessage_head
+ 02DB:1792       _Done
+ 02DB:1794       _SendSMSMsg
+ 02DB:186A       _outsymbol
+ 02DB:186C       _CapData
+ 02DB:198A       _BuffPtrs
+ 02DB:199E       _EscBuff
+ 02DB:1D9E       _MsgBuff
+ 02DB:219E       _DOS_TO_ETSI
+ 02DB:229E       _app_event
+ 02DB:22B0       __end
+ 02DB:22B0       _end
+ 0000:9876  Abs  __acrtmsg
+ 0000:9876  Abs  __acrtused
+ 0000:D6D6  Abs  __aDBdoswp
+
+Line numbers for d:\felix\lib\tsr.lib(csvc_hp.asm) segment CSVC_HP_TEXT
+
+   121 02c7:000a   124 02c7:000e   125 02c7:000f   126 02c7:0011
+   127 02c7:0014   135 02c7:0015   139 02c7:0017   142 02c7:001b
+   180 02c7:001c   181 02c7:001d   182 02c7:001f   183 02c7:0022
+   184 02c7:0023   185 02c7:0024   187 02c7:0026   188 02c7:0027
+   189 02c7:0029   190 02c7:002c   192 02c7:002d   193 02c7:002e
+   199 02c7:002f   216 02c7:0030   226 02c7:0031
+
+Line numbers for d:\felix\lib\mlhstub.lib(lhstub.asm) segment LHSTUB_TEXT
+
+   250 02ca:0002   251 02ca:0005   256 02ca:0008   257 02ca:000b
+   262 02ca:000e   263 02ca:0011   268 02ca:0014   269 02ca:0017
+   274 02ca:001a   275 02ca:001d   280 02ca:0020   281 02ca:0023
+   286 02ca:0026   287 02ca:0029   292 02ca:002c   293 02ca:002f
+   298 02ca:0032   299 02ca:0035   304 02ca:0038   305 02ca:003b
+   310 02ca:003e   311 02ca:0041   316 02ca:0044   317 02ca:0047
+   322 02ca:004a   323 02ca:004d   328 02ca:0050   329 02ca:0053
+   334 02ca:0056   335 02ca:0059   340 02ca:005c   341 02ca:005f
+   346 02ca:0062   347 02ca:0065   352 02ca:0068   353 02ca:006b
+   358 02ca:006e   359 02ca:0071   364 02ca:0074   365 02ca:0077
+   370 02ca:007a   371 02ca:007d   376 02ca:0080   377 02ca:0083
+   382 02ca:0086   383 02ca:0089   388 02ca:008c   389 02ca:008f
+   394 02ca:0092   395 02ca:0095   400 02ca:0098   401 02ca:009b
+   406 02ca:009e   407 02ca:00a1   412 02ca:00a4   413 02ca:00a7
+   418 02ca:00aa   419 02ca:00ad   424 02ca:00b0   425 02ca:00b3
+   430 02ca:00b6   431 02ca:00b9   436 02ca:00bc   437 02ca:00bf
+   442 02ca:00c2   443 02ca:00c5   448 02ca:00c8   449 02ca:00cb
+   454 02ca:00ce   455 02ca:00d1   460 02ca:00d4   461 02ca:00d7
+   466 02ca:00da   467 02ca:00dd   472 02ca:00e0   473 02ca:00e3
+   478 02ca:00e6   479 02ca:00e9   484 02ca:00ec   485 02ca:00ef
+   490 02ca:00f2   491 02ca:00f5   496 02ca:00f8   497 02ca:00fb
+
+Program entry point at 0000:1DC0

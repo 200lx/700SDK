@@ -1,0 +1,13 @@
+; SCCS info:   Module xbs_inte.mac  Version 1.1  Date 11/09/93  Time 16:14:10
+
+;/*SC_XBS_UNIQUE   */
+ifndef XBS_inter
+
+XBS_inter	equ	1
+
+
+SC_XBS_GET_VIEW_PTR	equ	(SC_XBS_UNIQUE	  * 256) + 0 + FNCT_BASE
+SC_XBS_SET_VIEW		equ	(SC_XBS_UNIQUE	  * 256) + 1 + FNCT_BASE
+SC_XBS_CLEAR_VIEWS	equ	(SC_XBS_UNIQUE	  * 256) + 2 + FNCT_BASE
+
+endif ;/* XBS_inter.h */

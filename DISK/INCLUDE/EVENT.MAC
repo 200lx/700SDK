@@ -1,0 +1,272 @@
+; SCCS info:   Module event.mac  Version 1.1  Date 11/09/93  Time 16:10:47
+
+; $Header:   T:/HH/INCLUDE/VCS/EVENT.MAV   1.10   23 Dec 1992 14:25:40   PETERR  $
+;****************************************************************
+; JAGUAR ACCESSORIES KERNEL
+;
+; copyright(c) 1990
+; Lotus Development Corporation
+; All Rights Reserved
+;
+; EVENT.MAC - 
+;****************************************************************
+; $Log:   T:/HH/INCLUDE/VCS/EVENT.MAV  $
+;  
+;     Rev 1.10   23 Dec 1992 14:25:40   PETERR
+;  Added new event structure element in alarm event structure
+;  Added new DO_ type request for current app q position to be placed
+;  just in front of task0.
+;  
+;     Rev 1.9   23 Nov 1992 14:20:28   PETERR
+;  Added new event: DO_EXIT_SYSMGR
+;  
+;     Rev 1.8   16 Nov 1992 14:25:36   PETERR
+;  Added a new DO_DOS_FULL event
+;  
+;     Rev 1.7   19 Oct 1992 12:29:38   PETERR
+;  Added new event to enable one app to request the closing of another app
+;  
+;     Rev 1.6   15 Oct 1992 10:53:06   KIM
+;  * * * SERVER DISK CRASH RECOVERY * * *
+;   1) The VCS directory was restored with Build 18 backup tape.
+;   2) This revision is to update files to Build 19.
+;   3) HELP.H has post-Build 19 changes.
+;  
+;     Rev 1.5   30 Sep 1992 17:25:10   PETERR
+;  Added defines for special handler events
+;  
+;     Rev 1.4   10 Sep 1992 12:31:56   PETERR
+;  Added new alarm event type
+;  
+;     Rev 1.3   03 Aug 1992 10:08:38   PETERR
+;  Changed alarm extra bytes param from long to int per Wei Lee's request
+;  
+;     Rev 1.2   29 Jun 1992 17:22:14   DAVID
+;  An EQU expected by 1-2-3 was missing (funeventmnofini or something like
+;  that.)
+;  
+;     Rev 1.1   18 Jun 1992 15:18:20   KIM
+;  Moved latest version from \HH\SYSMGR to here.  Now shared by Apps and SysMgr.
+;  
+; ---------------------------------------------------------------------
+; Moved from \HH\SYSMGR directory.  Shared by Apps and SysMgr (6/18/92 KIM)
+; ---------------------------------------------------------------------
+;     Rev 1.7   12 Jun 1992 11:30:02   PETERR
+;  Revamped code to enable queueing of alarms at any point into the future
+;  
+;     Rev 1.6   27 May 1992 09:11:16   PETERR
+;  Improved comments for service structure
+;  
+;     Rev 1.5   20 May 1992 12:54:44   PETERR
+;  Added new service structure
+;  
+;     Rev 1.4   13 May 1992 13:52:14   PETERR
+;  New event added.  New structure for service calls added.
+;  
+;     Rev 1.3   01 May 1992 17:15:42   HOMI
+;  Added Refresh and Return types
+;  
+;     Rev 1.2   03 Apr 1992 16:37:02   PETERR
+;  Added new event
+;  
+;     Rev 1.0   03 Dec 1991 16:20:44   DAVID
+;  Initial revision.
+;
+
+; messages returned from sysmgr
+
+E_NONE		equ	0
+E_KEY		equ	1
+E_BREAK		equ	2
+E_ACTIV		equ	3
+E_DEACT		equ	4
+E_TERM		equ	5
+E_BRIDGE	equ	6
+E_GROW		equ	7
+E_SHRINK	equ	8
+E_ALARM_EXP	equ	9
+E_ALARM_DAY	equ	10
+E_TIMECHANGE	equ	11
+E_SWAP		equ	12
+E_IC_INIT	equ	13
+E_IC_CLOSE	equ	14
+E_REFRESH       equ     15
+E_RETURN	equ	16
+E_SERVICE	equ	17
+E_ALARM_EXP_NOT_CURRENT equ 18
+
+; message passed to sysmgr in e_kind field
+; This value is only tested when sysmgr is expecting conclusion
+; of bridge and grow/shrink calls.
+
+E_RESUME   equ	0ffffh
+
+
+;See event.h for comments about these values
+DO_EVENT	   equ	   0	   ;/* get event */
+DO_YIELD	   equ	   1	   ;/* give up foreground */
+DO_FINI		   equ	   2	   ;/* terminate task */
+DO_NO_EVENT	   equ	   3	   ;/* return even if no event */
+DO_NO_FINI	   equ	   4	   ;/* refuse to close when asked */
+DO_BRIDGE	   equ	   5	   ;/* do brigde services */
+DO_IC_INIT	   equ	   6	   ;/* set up comm channel */
+DO_IC_CLOSE	   equ	   7	   ;/* close comm channel */
+DO_SWAP		   equ	   8	   ;/* swap to linked task */
+DO_LAUNCH	   equ	   9	   ;/* launch a new sysm compliant task */
+DO_EXEC 	   equ	   10	   ;/* Launch a DOS program */
+DO_DOS_CLOSE	   equ	   11	   ;/* Close DOS task request */
+DO_REFRESH         equ     12      ;/* Request refresh screen to fore ground */
+                                   ;/*  task, from background task */
+DO_RETURN          equ     13      ;/* Request refresh screen to fore ground */
+DO_SERVICE_COMPLETE equ	   14	   ;Task has completed background process
+DO_REQUEST_FOREGROUND equ  15	   ;Request to make this task foreground
+DO_CLOSE_APP	   equ	   16	   ;Request a particular app be closed.
+DO_EXEC_FULL	   equ	   17	   ;Full DOS EXEC call
+DO_EXIT_SYSMGR	   equ	   18	   ;Request to close all apps & go to sysmgr
+DO_MOVE_TO_END	   equ	   19	   ;Put this app at end of Q(but before task0)
+
+EVENT	STRUC
+	e_kind	       dw	0	; constant value from above
+	e_data	       dw	0	; ASCII (CP 850) translation of keystroke
+	e_scan	       db	0	; scan code from BIOS
+	e_shifts       db	0	; shifts register, when function returns
+	e_lics	       dw	0	; LICS translation of keystroke
+	e_fkey_num     dw	0	; function key number for 123 only
+					; not necessarily when key struck
+	e_bridgep      dd	0	; pointer to 123 bridge data structure
+	e_do_event     dw	0	; User set event type(DO_?????)
+	e_return_status	dw	0	;Return status
+EVENT ENDS
+
+
+EVENT_L	STRUC
+			DW	0	;Place holder
+			DW	0	;Place holder
+
+	e_launch_task	DB	0	;Type of launch requested
+	e_launch_type	DB	0
+EVENT_L	ENDS
+
+
+EVENT_IC STRUC
+			DW	0	;Place holder
+			DW	0	;Place holder
+
+	e_icdata_ptr	DW	0	;Offset of far ptr entry
+	e_link_task	DB	0	;Task to link to (TCB entry)
+	e_slave_offset	DW	0	;Slave pointer table offset
+EVENT_IC ENDS
+
+
+EVENT_EXECF STRUC
+		DW	0	;Place holder
+		DW	0	;Place holder
+exec_struc_ptr	DD	0	;EXEC structure pointer
+		DD	0	;Place holder
+exec_task_id	DB	0	;Task of DOS TCB entry
+EVENT_EXECF	ENDS
+
+
+
+EXEC_STRUCT	STRUC
+
+ex_file_spec	DD	 0;   Full path to file spec (ASCIIZ)*/
+ex_command_line DD	 0;   Command line text */
+ex_DOSsizek	DW	 0;   #Kbytes needed for this task (0=use default)*/
+ex_pause	DW	 0;   Pause before returning (0=No pause)*/
+ex_lock 	DW	 0;   Inhibit task switches (0=Allow)*/
+EXEC_STRUCT	ENDS
+
+
+
+
+EVENT_EXEC STRUC
+			DW	0	;Place holder
+			DW	0	;Place holder
+
+	e_exec_file_ptr	DD	0	;Full path of program to EXEC
+	e_cmd_tail_ptr	DD	0	;Command tail
+	e_task_id	DB	0	;Task of DOS TCB entry
+EVENT_EXEC ENDS
+
+EVENT_SERVICE STRUC
+			DW	0	;Place holder
+			DW	0	;Place holder
+
+	e_svc_user_ptr	DD	0	;Genl purpose set from SVC_user_ptr
+	e_svc_user_type	DB	0	;Genl purpose set from SVC_user_type
+EVENT_SERVICE ENDS
+
+
+
+EVENT_ALARM	STRUC
+			DW	0	;Place holder
+	e_alm_special	DW	0	;User alarm type
+			DB	3 DUP(?) ;Place holder
+	e_almcurtask	DB	 0	; Task id that was current
+	e_alm_extra	DW	2 DUP(?) ;User alarm params
+ EVENT_ALARM	ENDS
+					     ; E_ALARM_EXP
+
+
+
+
+
+
+
+
+;  Asynchronous task queuing and safe call point structure
+
+S_SERVICE	STRUC
+ SVC_request	db	?    ;Flag set by handler (ff=highest priority)
+ SVC_app_index	db	?    ;TCB entry to invoke (ff= special callback)
+ SVC_user_ptr	dd	?    ;Genl param passed thru E_SERVICE event to app
+ SVC_user_type	db	?    ;Genl param passed thru E_SERVICE event to app
+ SVC_user_id	db 4 DUP (?) ;Identifying signature set by service originator
+ SVC_user_entry dd	?    ;Entry point for app -> service originator calls
+ SVC_safe_entry dd	?    ;Ent pnt for safe svc handler -> DOS & sysm calls
+ SVC_used	db	?    ;Flag ind entry avail. Set and reset by sysmgr
+ SVC_status	dw	?    ;Status of request set by sysmgr
+S_SERVICE	ENDS
+
+CALLBACK_SERVICE_REQUEST equ  0ffh  ;Special SVC_app_index callback value
+FREEMEM_SERVICE_REQUEST  equ  0feh  ;Special SVC_app_index free static reqst
+
+
+
+
+
+
+
+; Field usages by event_kind 
+;
+;	TYPE		FIELDS USED
+;	-----------------------------------------------	
+;	E_NONE		shifts
+;	E_KEY		data,scan,fkey_num,lics,shifts
+;	E_BREAK		none
+;	E_ACTIV		none
+;	E_DEACT		none
+;	E_TERM		none
+;	E_BRIDGE	bridge
+;	E_GROW		data (paragpraphs to grow)
+;	E_SHRINK	data (requested paragpraphs to shrink on input)
+; 	E_ALARM_EXP	data (lo byte has app spec code, bridge has 4 byte val)
+; 	E_ALARM_DAY	none
+;	E_TIMECHANGE	bridge (-> timechange structure)
+
+
+; Return fields on RESUMPTIONS from applications
+; for SHRINK messages:
+;			data = number of paragraphs requested if successfull
+;			     = 0 if error
+; for GROW messages:	none
+; for BRIDGE messages:  bridge parameter block is filled in.
+
+	
+
+FunEVENTm	equ	0
+FunEVENTmn	equ	1
+FunEVENTnofini	equ	7      ; Added back in so 1-2-3 will build - DJG
+
+	

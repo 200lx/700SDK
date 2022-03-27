@@ -1,0 +1,120 @@
+; SCCS info:   Module smfp.mac  Version 1.1  Date 11/09/93  Time 16:13:09
+
+; $Header:   T:/HH/INCLUDE/VCS/SMFP.MAV   1.1   15 Oct 1992 10:53:52   KIM  $
+;****************************************************************
+; MOREL ACCESSORIES KERNEL
+;
+; copyright(c) 1990
+; Lotus Development Corporation
+; All Rights Reserved
+;
+; SMFP.MAC  -- interface to floating point servies
+;
+; Call  	SERVICES FP,fp_push
+;
+;****************************************************************
+; $Log:   T:/HH/INCLUDE/VCS/SMFP.MAV  $
+;  
+;     Rev 1.1   15 Oct 1992 10:53:52   KIM
+;  * * * SERVER DISK CRASH RECOVERY * * *
+;   1) The VCS directory was restored with Build 18 backup tape.
+;   2) This revision is to update files to Build 19.
+;   3) HELP.H has post-Build 19 changes.
+;  
+;     Rev 1.0   03 Dec 1991 20:14:28   DAVID
+;  Initial revision.
+;
+
+
+; format
+
+FunFpfp_push		equ 0
+FunFpfp_pop		equ 1	
+FunFpfp_push11		equ 2	
+FunFpfp_pop11		equ 3	
+
+; arithmetic
+
+FunFpfp_add		equ 4
+FunFpfp_sub		equ 5	
+FunFpfp_fminus		equ 6	
+FunFpfp_fmul		equ 7
+FunFpfp_fdiv		equ 8
+FunFpfp_mod		equ 9
+FunFpfp_fsqrt		equ 10
+FunFpfp_fabs		equ 11
+FunFpfp_halve		equ 12	
+
+; transcendental
+
+FunFpfp_fexp		equ 13
+FunFpipower		equ 14
+FunFppower		equ 15
+FunFpfln		equ 16	
+FunFpflog		equ 17
+FunFpfsin		equ 18
+FunFpfcos		equ 19
+FunFpftan		equ 20
+FunFpfasin		equ 21
+FunFpfacos		equ 22
+FunFpfatan		equ 23
+FunFpfatan2		equ 24
+
+FunFpfp_zero		equ 25
+FunFpfp_one		equ 26
+FunFpfp_ten		equ 27
+FunFpfp_hundred		equ 28
+FunFpfp_tenth		equ 29
+FunFpfp_pi		equ 30
+FunFpfp_err		equ 31
+FunFpfp_na		equ 32
+FunFpfp_maxnum		equ 33
+FunFpfp_minnum		equ 34
+		
+FunFpfp_cmp		equ 35
+FunFpfp_cmpp		equ 36
+FunFpfp_cmp0		equ 37
+FunFpfp_cmp0p		equ 38
+		
+FunFpns_init		equ 39
+FunFpnstack_save	equ 40
+FunFpnstack_restore	equ 41
+
+FunFpfp_drop		equ 42
+FunFpfp_dup		equ 43
+FunFpfp_swap		equ 44
+FunFpfp_int		equ 45
+FunFprp_ound		equ 46
+FunFpfp_min		equ 47
+FunFpfp_max		equ 48
+FunFpfp_rand_init	equ 49
+FunFpfp_random		equ 50
+
+
+
+
+
+
+;floating point number stack definitions
+
+ns_size	equ 11
+
+sign1	equ 0
+exp1	equ 1
+frac1	equ 3
+
+sign2	equ sign1+ns_size
+exp2	equ exp1+ns_size
+frac2	equ frac1+ns_size
+
+sign0	equ sign1-ns_size
+exp0	equ exp1-ns_size
+frac0	equ frac1-ns_size
+
+sign00	equ sign0-ns_size
+exp00	equ exp0-ns_size
+frac00	equ frac0-ns_size
+
+
+nstack_size	equ 60*ns_size
+nstack_save_size equ nstack_size + 10

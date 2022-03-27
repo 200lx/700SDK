@@ -1,0 +1,46 @@
+/* SCCS Information -- Module %M%  Version %I%  Date %G%  Time %U% */
+
+/***************************************************************************
+ ** Send SMS Message                                                      **
+ ***************************************************************************/
+
+#ifndef SendMessageHandler
+int far SendMessageHandler(PWINDOW Window, WORD Message, WORD Data, WORD Extra);
+#endif
+#ifndef MultiEdit
+int far MultiEdit(PWINDOW Window, WORD Message, WORD Data, WORD Extra);
+#endif
+
+extern char far *msgSendDlgTitle;
+extern char far *msgSendMsg;
+extern char far *msgSend;
+extern char far *msgExit;
+extern char far *msgPhone;
+
+extern char PhoneNum[];
+extern LHEDITDATA SendBuff;
+
+extern FKEY SendDlgFKeys[];
+
+/*** SendDlg Dialog Array ***/
+WINDOW SendDlgArray[]={
+  {Edit,83,31,14,1,			/* 4 = Phone */
+   &msgPhone,PhoneNum,
+   20,EDIT_INSERT|STYLE_WHCHAR,NULL,PARENT_FKEYS,NO_MENU,NO_HELP},
+  {MultiEdit,60,50,32,8,			/* 1 = Message */
+   &msgSendMsg,(PSTR)&SendBuff,
+   160,EDIT_INSERT|STYLE_WHCHAR,NULL,PARENT_FKEYS,NO_MENU,NO_HELP},
+  {PushButton,400,136,10,20,			/* 2 = &Send */
+   &msgSend,(PSTR)CMD_SEND,0,0|PUSHB_SENDMSG|STYLE_PUSHBUTTON,0,0,0,NO_HELP},
+  {PushButton,490,136,10,20,			/* 3 = &Cancel */
+   &msgExit,(PSTR)CMD_ESC,ESCKEY,0|PUSHB_SENDMSG|STYLE_PUSHBUTTON,0,0,0,NO_HELP}
+};
+
+/*** SendDlg Dialog Window ***/
+WINDOW SendMsgDlg={SendMessageHandler,
+       40,15,546,170,
+       &msgSendDlgTitle,(PSTR)SendDlgArray,
+       countof(SendDlgArray),STYLE_PUSHB_WIDTH,
+       NULL,SendDlgFKeys,NO_MENU,NO_HELP};
+
+
